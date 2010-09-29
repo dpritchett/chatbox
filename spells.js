@@ -8,42 +8,50 @@ var toggler = (function() {
 											 }
 				}
 })();
-				
+
+function spitLine(contents) {
+    $(".gameout").append(
+      "<li>" +
+      contents +
+      "</li>");
+    $(".gameout li:first").remove();
+    if(toggler.value()) {$(".gameout li:last").addClass("alt")};
+    };
+
+function wipeScreen(printMe){
+				$(".gameout li").empty();
+				for(i = 0; i < 9; i++){spitLine("&nbsp");}
+				(!printMe) ? spitLine("&nbsp") : spitLine(printMe);
+};
+
 function takeTurn(inVal) {
   $("input").removeAttr("value");
+	inVal = inVal.replace(" ","&nbsp;");
   if(inVal[0] == "/")
 	{
 					if(inVal=="/clear"){
 									wipeScreen();
-									$(".gameout").effect("bounce", {direction: "right", distance: "15"});
 					};
+					if(inVal=="/connect"){
+									alert("Connecting!");
+					}
 	}
-	else if(inVal != "") {
-		$(".gameout li:first").remove();
-		$(".gameout").append(
-			"<li>" +
-		   inVal +
-		   "</li>");
-		if(toggler.value()) {$(".gameout li:last").addClass("alt")};
-		 $(".gameout li:last").effect("bounce", {direction: "down", distance: "7", times: "2"})
+	else if(inVal !="") {
+			spitLine(inVal);
 		} 
 	$("input").select();
 };
 
-function wipeScreen(printMe){
-				$(".gameout li").empty();
-				for(i = 0; i < 9; i++){takeTurn("&nbsp");}
-				(!printMe) ? takeTurn("&nbsp") : takeTurn(printMe);
-};
-
 $(document).ready(function() {
 	$("#inputs").append(
-		"<input value=\"Welcome to app!\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
+		"<input value=\"What do you wanna do?\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
 	wipeScreen("Welcome to app!");
+
 	$("button").click(
 		function () {
 			takeTurn($("input").attr("value"));
 		}); 
+
 	$("input").click( function() { $(this).select(); });
 	$("input").select();
 	$("input").keypress(function(e) {
