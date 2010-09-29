@@ -5,7 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="./blindmud.css">
 	</head>
 	<body>
-		<h1>Welcome to game!</h1> 
+		<h1>Welcome to app!</h1> 
 		<ul class="gameout">
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
@@ -16,6 +16,8 @@
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
 			<li>&nbsp;</li>
-			<li>Welcome to game!</li>
+			<li>Welcome to app!</li>
+		</ul>
+		<div id="inputs"></div>
 	</body>
 </html>

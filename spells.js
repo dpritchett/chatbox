@@ -11,9 +11,10 @@ function takeTurn() {
 };
 
 $(document).ready(function() {
-	$(".gameout").after(
-		"<input value=\"What next?\" size=40/><button>Do it!</button>");
+	$("#inputs").append(
+		"<input value=\"What next?\" size=55/><button>Do it!</button>");
 	$("button").click(
 		function () {takeTurn();}); 
-		
+	$("input").click( function() { $(this).select(); });
+	$("input").select();
 });
