@@ -1,0 +1,8 @@
+body { font-family: georgia;}
+
+ul.gameout {
+	border-style: solid;
+	border-width: 5px;
+	list-style-type: none;
+	padding: 5px;
+}
