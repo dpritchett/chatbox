@@ -1,4 +1,7 @@
 body, input { font-family: georgia;}
+body {
+				background-color: #dddddd;
+}
 
 h1, #inputs {
        	text-align: center;
@@ -11,6 +14,7 @@ ul.gameout {
 	list-style-type: none;
 	padding: 5px;
 	width: 75%;
+	background-color: white;
 }
 
 .gameout li {

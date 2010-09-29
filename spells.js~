@@ -10,9 +10,13 @@ var toggler = (function() {
 })();
 				
 function takeTurn(inVal) {
+  $("input").removeAttr("value");
   if(inVal[0] == "/")
 	{
-					if(inVal=="/clear"){};
+					if(inVal=="/clear"){
+									wipeScreen();
+									$(".gameout").effect("bounce", {direction: "right", distance: "15"});
+					};
 	}
 	else if(inVal != "") {
 		$(".gameout li:first").remove();
@@ -23,15 +27,19 @@ function takeTurn(inVal) {
 		if(toggler.value()) {$(".gameout li:last").addClass("alt")};
 		 $(".gameout li:last").effect("bounce", {direction: "down", distance: "7", times: "2"})
 		} 
-		 $("input").removeAttr("value");
 	$("input").select();
 };
 
+function wipeScreen(printMe){
+				$(".gameout li").empty();
+				for(i = 0; i < 9; i++){takeTurn("&nbsp");}
+				(!printMe) ? takeTurn("&nbsp") : takeTurn(printMe);
+};
+
 $(document).ready(function() {
-				for(var i = 0; i < 9; i++){takeTurn("&nbsp;")};				
-				takeTurn("Welcome to app!");
 	$("#inputs").append(
-		"<input value=\"What do you want to do?\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
+		"<input value=\"Welcome to app!\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
+	wipeScreen("Welcome to app!");
 	$("button").click(
 		function () {
 			takeTurn($("input").attr("value"));

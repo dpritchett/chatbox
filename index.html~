@@ -8,6 +8,16 @@
 	<body>
 		<h1>Welcome to app!</h1> 
 		<ul class="gameout">
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>Welcome to app!</li>
 		</ul>
 		<div id="inputs"></div>
 	</body>
