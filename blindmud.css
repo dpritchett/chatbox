@@ -1,4 +1,5 @@
-body { font-family: georgia;}
+body, input { font-family: georgia;}
+
 h1, #inputs {
        	text-align: center;
 	width: 75%;
@@ -14,4 +15,8 @@ ul.gameout {
 
 .gameout li {
 	padding-left: 20px;
+}
+
+input, button {
+	font-size: 20px;
 }
