@@ -20,8 +20,9 @@
 			<li>Welcome to app!</li>
 		</ul>
 		<div id="inputs">
-						<input tabindex="1" size="55" value="What do you want to do?"></input>
-						<button type="submit" tabindex="2"></button>
+						<input tabindex="1" size="55" value="What do you want to do?"/>
+						<button type="submit" tabindex="2">Do it!</button>
 		</div>
+		<div width="20%">.</div><div><center><p id="alerts"></p></center></div><div width="20%">.</div>
 	</body>
 </html>

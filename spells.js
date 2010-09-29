@@ -9,6 +9,13 @@ var toggler = (function() {
 				}
 })();
 
+function alertUser(alertText){
+				$("#alerts").empty();
+				$("#alerts").append(alertText);
+				$("#alerts").stop(true, true).fadeIn(500, function(){$("#alerts").fadeOut(3000)});
+				
+}
+
 function spitLine(contents) {
     $(".gameout").append(
       "<li>" +
@@ -34,6 +41,7 @@ function takeTurn(inVal) {
 					if(inVal=="/connect"){
 									alert("Connecting!");
 					}
+					alertUser(inVal);
 	}
 	else if(inVal !="") {
 			spitLine(inVal);

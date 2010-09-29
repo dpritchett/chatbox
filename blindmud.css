@@ -1,11 +1,22 @@
-body, input { font-family: georgia;}
+body, input, #alerts, .gameout { font-family: georgia;}
 body {
+				margin-left: 20%;
+				margin-right: 20%;
 				background-color: #dddddd;
 }
 
 h1, #inputs {
        	text-align: center;
-	width: 75%;
+}
+
+#alerts {
+				font-size: 36px;
+				margin-top 20px;
+				border-style: solid;
+				border-color: red;
+				text-align: center;
+				background-color: pink;
+				display: none;
 }
 
 ul.gameout {
@@ -13,7 +24,6 @@ ul.gameout {
 	border-width: 5px;
 	list-style-type: none;
 	padding: 5px;
-	width: 75%;
 	background-color: white;
 }
 
