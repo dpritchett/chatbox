@@ -19,6 +19,9 @@
 			<li>&nbsp;</li>
 			<li>Welcome to app!</li>
 		</ul>
-		<div id="inputs"></div>
+		<div id="inputs">
+						<input tabindex="1" size="55" value="What do you want to do?"></input>
+						<button type="submit" tabindex="2"></button>
+		</div>
 	</body>
 </html>

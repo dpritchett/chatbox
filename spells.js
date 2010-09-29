@@ -19,8 +19,7 @@ function spitLine(contents) {
     };
 
 function wipeScreen(printMe){
-				$(".gameout li").empty();
-				for(i = 0; i < 9; i++){spitLine("&nbsp");}
+				for(i = 0; i < 10; i++){spitLine("&nbsp");}
 				(!printMe) ? spitLine("&nbsp") : spitLine(printMe);
 };
 
@@ -43,8 +42,6 @@ function takeTurn(inVal) {
 };
 
 $(document).ready(function() {
-	$("#inputs").append(
-		"<input value=\"What do you wanna do?\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
 	wipeScreen("Welcome to app!");
 
 	$("button").click(
