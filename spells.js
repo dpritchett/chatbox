@@ -10,16 +10,20 @@ var toggler = (function() {
 })();
 				
 function takeTurn(inVal) {
-	if(inVal != "") {
+  if(inVal[0] == "/")
+	{
+					if(inVal=="/clear"){};
+	}
+	else if(inVal != "") {
 		$(".gameout li:first").remove();
 		$(".gameout").append(
 			"<li>" +
 		   inVal +
 		   "</li>");
 		if(toggler.value()) {$(".gameout li:last").addClass("alt")};
-		 $("input").removeAttr("value");
 		 $(".gameout li:last").effect("bounce", {direction: "down", distance: "7", times: "2"})
 		} 
+		 $("input").removeAttr("value");
 	$("input").select();
 };
 
