@@ -17,6 +17,10 @@ ul.gameout {
 	padding-left: 20px;
 }
 
+li.alt{
+	background-color: #aaffff;
+}
+
 input, button {
 	font-size: 20px;
 }

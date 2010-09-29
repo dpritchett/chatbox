@@ -1,10 +1,22 @@
+var toggler = (function() {
+				var flag = true;
+				return {
+								value: function() {
+									(flag==true) ? flag = false : flag = true;
+									return flag;
+											 }
+											 
+				}
+})();
+				
 function takeTurn(inVal) {
 	if(inVal != "") {
 		$(".gameout li:first").remove();
 		$(".gameout").append(
-		   "<li>" +
+			"<li>" +
 		   inVal +
 		   "</li>");
+		if(toggler.value()) {$(".gameout li:last").addClass("alt")};
 		 $("input").removeAttr("value");
 		 $(".gameout li:last").effect("bounce", {direction: "down", distance: "7", times: "2"})
 		} 
@@ -12,8 +24,10 @@ function takeTurn(inVal) {
 };
 
 $(document).ready(function() {
+				for(var i = 0; i < 9; i++){takeTurn("&nbsp;")};				
+				takeTurn("Welcome to app!");
 	$("#inputs").append(
-		"<input value=\"What next?\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
+		"<input value=\"What do you want to do?\" tabindex=1 size=55/><button type=submit tabindex=2>Do it!</button>");
 	$("button").click(
 		function () {
 			takeTurn($("input").attr("value"));

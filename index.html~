@@ -1,22 +1,13 @@
 <html>
 	<head>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="spells.js"></script>
 		<link rel="stylesheet" type="text/css" href="./blindmud.css">
 	</head>
 	<body>
 		<h1>Welcome to app!</h1> 
 		<ul class="gameout">
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>&nbsp;</li>
-			<li>Welcome to app!</li>
 		</ul>
 		<div id="inputs"></div>
 	</body>
