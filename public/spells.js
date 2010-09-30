@@ -15,7 +15,12 @@ function alertUser(alertText){
 				$("#alerts").stop(true, true).fadeIn(500, function(){$("#alerts").fadeOut(3000)});
 }
 
-function spitLine(contents) {
+function spitLine(contents, username) {
+		if(username) {
+		var d = new Date();
+		contents = "<span class=\"stamp\">[" + d.getHours() + ":" + d.getMinutes() + "] " +
+			 username + "</span>: " + contents;
+}
     $(".gameout").append(
       "<li>" +
       contents +
@@ -30,12 +35,18 @@ function wipeScreen(printMe){
 };
 
 function takeTurn(inVal) {
-  $("input").removeAttr("value");
+  $("#txtYourMove").removeAttr("value");
+  if($("#username").attr("value").search("user") == -1) {
+		$("#username").css('display', 'none');
+}
 	inVal = inVal.replace(" ","&nbsp;");
   if(inVal[0] == "/")
 	{
 					if(inVal=="/clear"){
 									wipeScreen();
+					};
+					if(inVal.search("/name") != -1 ){
+					  $("#username").attr('value', inVal.substr(11));
 					};
 					if(inVal=="/connect"){
 									alert("Connecting!");
@@ -43,23 +54,25 @@ function takeTurn(inVal) {
 					alertUser(inVal.substr(1));
 	}
 	else if(inVal !="") {
-			spitLine(inVal);
+			spitLine(inVal, $("#username").attr("value"));
 		} 
-	$("input").select();
+	$("#txtYourMove").select();
 };
 
 // onload init stuff
 $(document).ready(function() {
 	wipeScreen("Welcome to app!");
+  
+  $("#username").attr("value", "user" + Math.floor(Math.random()*1000));
 
 	$("button").click(
 		function () {
-			takeTurn($("input").attr("value"));
+			takeTurn($("#txtYourMove").attr("value"));
 		}); 
 
-	$("input").click( function() { $(this).select(); });
-	$("input").select();
-	$("input").keypress(function(e) {
+	$("#txtYourMove").click( function() { $(this).select(); });
+	$("#txtYourMove").select();
+	$("#txtYourMove").keypress(function(e) {
 		if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
 			$("button").click();
 		}

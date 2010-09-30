@@ -9,6 +9,12 @@ h1, #inputs {
        	text-align: center;
 }
 
+.stamp {
+		color: green;
+}
+
+#username { }
+
 #alerts {
 				font-size: 36px;
 				margin-top 20px;
