@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script> 
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="spells.js"></script>
+		<link rel="stylesheet" type="text/css" href="./blindmud.css">
+		<title>Daniel's JS chatbox</title>
+	</head>
+	<body>
+		<h1>Welcome to chatbox!</h1> 
+		<ul class="gameout">
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>Welcome to app!</li>
+		</ul>
+		<div id="inputs">
+						<input id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
+						<button type="submit" tabindex="2">Enter</button>
+						<input id="username" tabindex="3"/> 
+		</div>
+		<p id="alerts"></p>
+		<div id="footer">Written by <a href="http://sharingatwork.com">Daniel J. Pritchett</a>.  Source on <a href="http://github.com/dpritchett/chatbox">github</a>, hosting by <a href="http://no.de">Joyent</a>.</div>
+	</body>
+</html>
