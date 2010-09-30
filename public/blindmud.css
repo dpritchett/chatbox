@@ -44,3 +44,14 @@ li.alt{
 input, button {
 	font-size: 20px;
 }
+
+#container {
+				min-height: 100%;
+				margin-bottom: -36px;
+}
+#footer {
+				width: 100%;
+				float: bottom;
+				text-align: center;
+				font-style: italic;
+}
