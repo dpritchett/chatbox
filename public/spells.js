@@ -45,7 +45,7 @@ function takeTurn(inVal) {
 					if(inVal=="/clear"){
 									wipeScreen();
 					};
-					if(inVal.search("/name") != -1 ){
+					if((inVal.search("/name") != -1) || (inVal.search("/nick") != -1)){
 					  $("#username").attr('value', inVal.substr(11));
 					};
 					if(inVal=="/connect"){
