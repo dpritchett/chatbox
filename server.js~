@@ -5,7 +5,7 @@ var
   paperboy = require('paperboy'),
 
   PORT = 80,
-  WEBROOT = path.join(path.dirname(__filename), './public');
+  WEBROOT = path.join(path.dirname(__filename), '../public');
 
 http.createServer(function(req, res) {
   var ip = req.connection.remoteAddress;

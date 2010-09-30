@@ -15,11 +15,11 @@
       <service_fmri value="svc:/system/filesystem/local"/>
     </dependency>
 
-    <method_context working_directory="/home/node/node-service/current" project="nodep">
+    <method_context working_directory="/home/node/node-service/releases/20100930172959" project="nodep">
       <method_credential user="node" group="node" privileges='basic,net_privaddr'  />
       <method_environment>
-							<envvar name="PATH" value="/home/node/opt/bin/:/home/node/local/bin:/home/node/local/nodejs/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin"/>
-						<envvar name="NODE_PATH" value="/home/node/node-service/current:/home/node/.node_libraries"/> -->
+							<envvar name="PATH" value="/home/node/opt/bin/:/home/node/local/bin:/home/node/local/nodejs/bin:/opt/nodejs/v0.2.2/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin"/>
+							<!--        <envvar name="NODE_PATH" value="/home/node/node-service/releases/20100930172959:/home/node/.node_libraries"/> -->
         <envvar name="MANPATH" value="/home/node/local/share/man:/opt/local/man:/usr/share/man:/usr/sfw/share/man"/>
         <envvar name="HOME" value="/home/node"/>
       </method_environment>
@@ -28,7 +28,7 @@
     <exec_method
       type="method"
       name="start"
-			exec="env `cat /home/node/node-service/profile` /home/node/opt/bin/node /home/node/node-service/current/server.js"
+			exec="env `cat /home/node/node-service/profile` /home/node/opt/bin/node /home/node/server.js"
       timeout_seconds="60"/>
 
     <exec_method
