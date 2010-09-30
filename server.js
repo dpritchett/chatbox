@@ -1,3 +1,8 @@
+// Node.js file server using Paperboy
+//
+// Ever-so-slightly modified from the sample at
+// http://github.com/felixge/node-paperboy/
+
 var
   sys = require('sys'),
   path = require('path'),
