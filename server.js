@@ -52,14 +52,15 @@ socket.on('connection', function(client){
                 //passing user message to Couch
                 db.saveDoc(uuid.generate(), message, function (er, ok) {
                         if (er) {
-                                console.log('db error on: ' + JSON.stringify(message) +
+                                console.log('DB error on input: ' +
+                                        JSON.stringify(message) +
                                         JSON.stringify(er));
                                 throw new Error(JSON.stringify(er)) 
                         }	
                         else {
                                 console.log('Wrote to couch: ' +
-                                        JSON.stringify(message));};
+                                        sys.inspect(message));};
                 });
         })
-        client.on('disconnect', function(){ console.log("client disconnected") })
+        client.on('disconnect', function(){ console.log("Client disconnected") })
 });
