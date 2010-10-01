@@ -1,11 +1,32 @@
+/*
+ *  Chatbox by Daniel J. Pritchett
+ *  
+ *  Use npm to install the packages by name e.g. npm install socket.io
+ *
+ *  Development begun September 2010 as a JS exploration
+ *
+ *  Contacts: 
+ *    daniel@sharingatwork.com
+ *    http://github.com/dpritchett
+ *    http://twitter.com/dpritchett
+ *
+ */
+
+var $PORT = 80,
+		$DB_SERVER = 'dpritchett.couchone.com',
+		$DB_PORT = 80;
+
 var Connect = require('connect'),
 		sys = require('sys'),
-		couchdb = require('couchdb'),
-		couchClient = couchdb.createClient(80, 'dpritchett.couchone.com'),
-		db = couchClient.db('chatbox'),
 		uuid = require('uuid'),
-		io = require('socket.io');
+		io = require('socket.io'),
+		
+		couchdb = require('couchdb'),
+			couchClient = couchdb.createClient($DB_PORT, $DB_SERVER),
+			db = couchClient.db('chatbox');
 
+// Connect middleware serves static files and can handle additional
+// features I might want to add later
 var server = Connect.createServer(
   Connect.logger(),
   Connect.staticProvider(__dirname + '/public'),
@@ -15,23 +36,28 @@ var server = Connect.createServer(
 			res.end();
   }
 );
+server.listen($PORT);
+console.log("Listening on port " + $PORT + " with backend at " +
+							 	$DB_SERVER + ":" + $DB_PORT);
 
-server.listen(80);
-
-// socket.io, I choose you
+// Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
-
 socket.on('connection', function(client){
-  client.on('message', function(message){
-			 console.log("MESG recvd: \"" + sys.inspect(message) + "\"");
- 			 db.saveDoc(uuid.generate(), message, function (er, ok) {
-			 		if (er) {
-						console.log('db error on: ' + JSON.stringify(message) +
-						 JSON.stringify(er));
-						throw new Error(JSON.stringify(er)) 
-					}	
-	    		else {console.log('Wrote to couch: ' + JSON.stringify(message));};
-				});
-	})
-  client.on('disconnect', function(){ console.log("client disconnected") })
+				//incoming message on a socket
+				// We're hoping to see some JSON that we can punt to CouchDB
+				client.on('message', function(message){
+							 	console.log("MESG recvd: \"" + sys.inspect(message) + "\"");
+								//passing user message to Couch
+				 				db.saveDoc(uuid.generate(), message, function (er, ok) {
+												if (er) {
+																console.log('db error on: ' + JSON.stringify(message) +
+													 							JSON.stringify(er));
+																throw new Error(JSON.stringify(er)) 
+												}	
+												else {
+																console.log('Wrote to couch: ' +
+																				JSON.stringify(message));};
+								});
+				})
+				client.on('disconnect', function(){ console.log("client disconnected") })
 });

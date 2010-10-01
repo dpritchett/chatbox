@@ -1,15 +1,27 @@
 body, input, #alerts, .gameout { font-family: georgia;}
+
+h1, #inputs {
+       	text-align: center;
+}
+
+#container {
+				min-height: 100%;
+				margin-bottom: -36px;
+}
+#footer {
+				width: 100%;
+				float: bottom;
+				text-align: center;
+				font-style: italic;
+}
+
 body {
 				margin-left: 20%;
 				margin-right: 20%;
 				background-color: #dddddd;
 }
 
-h1, #inputs {
-       	text-align: center;
-}
-
-.stamp {
+.timestamp {
 		color: green;
 }
 
@@ -45,13 +57,3 @@ input, button {
 	font-size: 20px;
 }
 
-#container {
-				min-height: 100%;
-				margin-bottom: -36px;
-}
-#footer {
-				width: 100%;
-				float: bottom;
-				text-align: center;
-				font-style: italic;
-}
