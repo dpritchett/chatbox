@@ -80,7 +80,7 @@ function takeTurn(inVal) {
 
 // onload init stuff
 $(document).ready(function() {
-        wipeScreen("Welcome to app!");
+        wipeScreen();
         $("#username").attr("value", "user" + Math.floor(Math.random()*1000));
         $("button").click(
                 function () {
