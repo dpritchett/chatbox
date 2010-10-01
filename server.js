@@ -3,6 +3,7 @@ var Connect = require('connect'),
 		couchdb = require('couchdb'),
 		couchClient = couchdb.createClient(80, 'dpritchett.couchone.com'),
 		db = couchClient.db('chatbox'),
+		uuid = require('uuid'),
 		io = require('socket.io');
 
 var server = Connect.createServer(
@@ -21,21 +22,16 @@ server.listen(80);
 var socket = io.listen(server);
 
 socket.on('connection', function(client){
-  // new client is here!
   client.on('message', function(message){
-			 var msg = { message: [client.sessionId, message]};
 			 console.log("MESG recvd: \"" + sys.inspect(message) + "\"");
-
- 			 db.saveDoc('a9999101', msg, function (er, ok) {
+ 			 db.saveDoc(uuid.generate(), message, function (er, ok) {
 			 		if (er) {
-						//throw new Error(JSON.stringify(er)) 
-						console.log('db error on: ' + JSON.stringify(msg) +
+						console.log('db error on: ' + JSON.stringify(message) +
 						 JSON.stringify(er));
+						throw new Error(JSON.stringify(er)) 
 					}	
-	    		else {console.log('Wrote to couch: ' + JSON.stringify(msg));};
+	    		else {console.log('Wrote to couch: ' + JSON.stringify(message));};
 				});
-
 	})
-
   client.on('disconnect', function(){ console.log("client disconnected") })
 });
