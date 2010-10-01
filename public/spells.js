@@ -54,9 +54,11 @@ function takeTurn(inVal) {
 	}
 	else if(inVal !="") {
 			var d = new Date();
-      socket.send('{ name: "' + $('#username').attr('value') + '", ' +
-					'content: "' + $('#txtYourMove').attr('value') + '", ' +
-					'date: "' + d.getTime() + '" }');
+      var jstring = '{ "name": "' + $('#username').attr('value') + '", ' +
+					'"content": "' + $('#txtYourMove').attr('value') + '", ' +
+					'"date": "' + d.getTime() + '" }';
+		  console.log(jstring);
+			socket.send(jstring);
 
 			spitLine(inVal, $("#username").attr('value'));
 		} 
