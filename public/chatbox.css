@@ -10,7 +10,6 @@ h1, #inputs {
 }
 #footer {
         width: 100%;
-        float: bottom;
         text-align: center;
         font-style: italic;
 }
@@ -29,7 +28,7 @@ body {
 
 #alerts {
         font-size: 36px;
-        margin-top 20px;
+        margin-top: 20px;
         border-style: solid;
         border-color: red;
         text-align: center;
