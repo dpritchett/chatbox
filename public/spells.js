@@ -35,7 +35,6 @@ function wipeScreen(printMe){
 };
 
 function takeTurn(inVal) {
-  $("#txtYourMove").removeAttr("value");
   if($("#username").attr("value").search("user") == -1) {
 		$("#username").css('display', 'none');
 }
@@ -54,8 +53,14 @@ function takeTurn(inVal) {
 					alertUser(inVal.substr(1));
 	}
 	else if(inVal !="") {
-			spitLine(inVal, $("#username").attr("value"));
+			var d = new Date();
+      socket.send('{ name: "' + $('#username').attr('value') + '", ' +
+					'content: "' + $('#txtYourMove').attr('value') + '", ' +
+					'date: "' + d.getTime() + '" }');
+
+			spitLine(inVal, $("#username").attr('value'));
 		} 
+  $("#txtYourMove").removeAttr("value");
 	$("#txtYourMove").select();
 };
 
