@@ -58,7 +58,10 @@ function takeTurn(inVal) {
         }
 
         //clean up whitespace
+        //need to sanitize inputs serverside too
         inVal = inVal.replace(" ","&nbsp;");
+        inVal = inVal.replace("\\", "");
+        inVal = inVal.replace("\"", "");
 
         //Detect and execute slash commands
         if(inVal[0] == "/")
@@ -75,7 +78,7 @@ function takeTurn(inVal) {
         //Submit plaintext to server as JSON
         else if(inVal !="") {
                 var jstring = '{ "name": "' + $('#username').attr('value') + '", ' +
-                        '"content": "' + $('#txtYourMove').attr('value') + '", ' +
+                        '"content": "' + inVal + '", ' +
                                 '"date": "' + (new Date()).getTime() + '" }';
                 console.log("Sending to server: " + jstring);
                 socket.send(jstring);
