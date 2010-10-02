@@ -6,6 +6,11 @@
                 <script type="text/javascript" src="chatbox.js"></script>
                 <script src="/socket.io/socket.io.js"></script>
                 <script>
+
+                        if (typeof console == "undefined" || typeof console.log == "undefined") {
+                                var console = { log: function() {} }; }
+
+
                         var socket = new io.Socket();
                         socket.on('connect', function(){ console.log('connected'); });
                         socket.on('message', 

@@ -6,7 +6,7 @@
                 <script type="text/javascript" src="chatbox.js"></script>
                 <script src="/socket.io/socket.io.js"></script>
                 <script>
-
+                        //workaround for browsers without the console() option
                         if (typeof console == "undefined" || typeof console.log == "undefined") {
                                 var console = { log: function() {} }; }
 
