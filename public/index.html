@@ -4,8 +4,13 @@
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
                 <script type="text/javascript" src="http://plugins.jquery.com/files/jquery.md5.js.txt"></script>
                 <script type="text/javascript" src="chatbox.js"></script>
-                <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+                <script src="/socket.io/socket.io.js"></script>
                 <script>
+
+                        if (typeof console == "undefined" || typeof console.log == "undefined") {
+                                var console = { log: function() {} }; }
+
+
                         var socket = new io.Socket();
                         socket.on('connect', function(){ console.log('connected'); });
                         socket.on('message', 

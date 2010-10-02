@@ -22,11 +22,11 @@ function alertUser(alertText){
 function spitLine(contents, username) {
         if(username) {
                 var d = new Date();
-                contents = "<span class=\"timestamp\" style=\"color: #" +
-                        $.md5(username).substring(0,6) + 
-                        "\">[" +
-                        d.getHours() +
+                contents = "[" + d.getHours() +
                         ":" + d.getMinutes() + "] " +
+                        "<span class=\"timestamp\" style=\"background-color: #" +
+                        $.md5(username).substring(0,6) + 
+                        "\">" +
                         username + "</span>: " + contents;
         }
         $(".gameout").append(
