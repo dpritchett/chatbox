@@ -20,6 +20,7 @@ function alertUser(alertText){
 
 //Write a line to the chatbox on the page
 function spitLine(contents, username) {
+        //no username means no timestamp etc
         if(username) {
                 var d = new Date();
                 contents = "<span class=\"timestamp\">[" + d.getHours() % 12 +
@@ -29,12 +30,16 @@ function spitLine(contents, username) {
                         "\">" +
                         username + "</span>: " + contents;
         }
+        //handle empty line
         if(!contents) contents = '&nbsp;';
+        
         $(".gameout").append(
                         "<li>" +
                         contents +
                         "</li>");
         $(".gameout li:first").remove();
+        
+        //zebra stripes
         if(toggler.value()) {$(".gameout li:last").addClass("alt")};
 };
 
@@ -47,9 +52,12 @@ function wipeScreen(printMe){
 //Reads user input and passes it on to server via websocket.
 //Also checks for slash commands
 function takeTurn(inVal) {
+        //hide username input once user has entered a name
         if($("#username").attr("value").search("user") == -1) {
                 $("#username").css('display', 'none');
         }
+
+        //clean up whitespace
         inVal = inVal.replace(" ","&nbsp;");
 
         //Detect and execute slash commands
@@ -61,10 +69,7 @@ function takeTurn(inVal) {
                 if((inVal.search("/name") != -1) || (inVal.search("/nick") != -1)){
                         $("#username").attr('value', inVal.substr(11));
                 };
-                if(inVal=="/connect"){
-                        alert("Connecting!");
-                }
-                alertUser(inVal.substr(1));
+                alertUser(inVal.substr(1)); //user needs to see slash commands are received
         }
 
         //Submit plaintext to server as JSON
@@ -72,7 +77,7 @@ function takeTurn(inVal) {
                 var jstring = '{ "name": "' + $('#username').attr('value') + '", ' +
                         '"content": "' + $('#txtYourMove').attr('value') + '", ' +
                                 '"date": "' + (new Date()).getTime() + '" }';
-                console.log(jstring);
+                console.log("Sending to server: " + jstring);
                 socket.send(jstring);
                 spitLine(inVal, $("#username").attr('value'));
         } 
