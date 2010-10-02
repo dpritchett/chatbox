@@ -6,7 +6,7 @@
                 <script type="text/javascript" src="chatbox.js"></script>
                 <script src="/socket.io/socket.io.js"></script>
                 <script>
-
+                        //workaround for browsers without the console() option
                         if (typeof console == "undefined" || typeof console.log == "undefined") {
                                 var console = { log: function() {} }; }
 
@@ -18,7 +18,11 @@
                                 console.log('Message received: ' + message); 
                                 spitLine($.parseJSON(message).content, $.parseJSON(message).name);
                         });
-                        socket.on('disconnect', function(){ console.log('disconnected'); });
+                        socket.on('disconnect', function(){
+                                spitLine();
+                                spitLine("<strong>Connection lost.  Refresh page to continue.</strong>", "system");
+                                $("#inputs").fadeOut();
+                                console.log('disconnected'); });
                         socket.connect();
                 </script>
                 <link rel="stylesheet" type="text/css" href="./chatbox.css">

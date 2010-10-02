@@ -47,8 +47,13 @@ ul.gameout {
         padding-left: 20px;
 }
 
-li.alt{
+li.alt {
         background-color: #EEEEEE; 
+}
+
+.timestamp {
+        color: #999999;
+        margin-right: 10px;
 }
 
 input, button {

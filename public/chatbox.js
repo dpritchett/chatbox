@@ -22,13 +22,14 @@ function alertUser(alertText){
 function spitLine(contents, username) {
         if(username) {
                 var d = new Date();
-                contents = "[" + d.getHours() +
-                        ":" + d.getMinutes() + "] " +
-                        "<span class=\"timestamp\" style=\"background-color: #" +
+                contents = "<span class=\"timestamp\">[" + d.getHours() % 12 +
+                        ":" + d.getMinutes() + "]</span> " +
+                        "<span style=\"background-color: #" +
                         $.md5(username).substring(0,6) + 
                         "\">" +
                         username + "</span>: " + contents;
         }
+        if(!contents) contents = '&nbsp;';
         $(".gameout").append(
                         "<li>" +
                         contents +
@@ -39,8 +40,8 @@ function spitLine(contents, username) {
 
 //clears the chatbox by pushing empty lines
 function wipeScreen(printMe){
-        for(i = 0; i < 10; i++) {spitLine("&nbsp");}
-        (!printMe) ? spitLine("&nbsp") : spitLine(printMe);
+        for(i = 0; i < 10; i++) {spitLine();}
+        spitLine(printMe);
 };
 
 //Reads user input and passes it on to server via websocket.
