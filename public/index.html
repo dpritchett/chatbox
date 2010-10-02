@@ -2,6 +2,7 @@
         <head>
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
                 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+                <script type="text/javascript" src="http://plugins.jquery.com/files/jquery.md5.js.txt"></script>
                 <script type="text/javascript" src="chatbox.js"></script>
                 <script src="http://cdn.socket.io/stable/socket.io.js"></script>
                 <script>
@@ -10,7 +11,7 @@
                         socket.on('message', 
                         function(message){
                                 console.log('Message received: ' + message); 
-                                spitLine($.parseJSON(message).message, 'system');
+                                spitLine($.parseJSON(message).content, $.parseJSON(message).name);
                         });
                         socket.on('disconnect', function(){ console.log('disconnected'); });
                         socket.connect();

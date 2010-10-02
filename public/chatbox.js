@@ -22,7 +22,10 @@ function alertUser(alertText){
 function spitLine(contents, username) {
         if(username) {
                 var d = new Date();
-                contents = "<span class=\"timestamp\">[" + d.getHours() +
+                contents = "<span class=\"timestamp\" style=\"color: #" +
+                        $.md5(username).substring(0,6) + 
+                        "\">[" +
+                        d.getHours() +
                         ":" + d.getMinutes() + "] " +
                         username + "</span>: " + contents;
         }
