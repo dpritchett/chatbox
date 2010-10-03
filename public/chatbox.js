@@ -24,7 +24,9 @@ function spitLine(contents, username) {
         if(username) {
                 var d = new Date();
                 contents = "<span class=\"timestamp\">[" + d.getHours() % 12 +
-                        ":" + d.getMinutes() + "]</span> " +
+                        ":" +
+                        (100 + d.getMinutes()).toString().substring(1) + //force 2-digit minutes
+                        "]</span> " +
                         "<span style=\"background-color: #" +
                         $.md5(username).substring(0,6) + 
                         "\">" +
