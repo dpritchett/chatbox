@@ -1,6 +1,6 @@
 // toggler.value() returns true then false then true then false...
 var toggler = (function() {
-        var flag = true;
+        var flag = false;
         return {
                 value: function() {
                                flag = !flag;
@@ -28,7 +28,7 @@ function spitLine(contents, username) {
                         (100 + d.getMinutes()).toString().substring(1) + //force 2-digit minutes
                         "]</span> " +
                         "<span style=\"background-color: #" +
-                        $.md5(username).substring(0,6) + 
+                        $.md5(username).substring(0,6) + //unique color for each username
                         "\">" +
                         username + "</span>: " + contents;
         }
