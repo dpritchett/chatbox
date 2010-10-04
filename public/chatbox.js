@@ -9,11 +9,9 @@ var toggler = (function() {
         };
 })();
 
-//Display an alert in a colored box that fades out
+//Display an alert in a colored box that fades in and then out
 function alertUser(alertText){
-        $("#alerts").empty();
-        $("#alerts").append(alertText);
-        $("#alerts").stop(true, true).fadeIn(
+        $("#alerts").empty().append(alertText).stop(true, true).fadeIn(
                         500,
                         function(){$("#alerts").fadeOut(3000);});
 }
@@ -54,11 +52,6 @@ function wipeScreen(printMe){
 //Reads user input and passes it on to server via websocket.
 //Also checks for slash commands
 function takeTurn(inVal) {
-        //hide username input once user has entered a name
-        if($("#username").attr("value").search("user") == -1) {
-                $("#username").css('display', 'none');
-        }
-
         //clean up whitespace
         //need to sanitize inputs serverside too
         inVal = inVal.replace(" ","&nbsp;");
@@ -73,6 +66,7 @@ function takeTurn(inVal) {
                 }
                 if((inVal.search("/name") != -1) || (inVal.search("/nick") != -1)){
                         $("#username").attr('value', inVal.substr(11));
+
                 }
                 alertUser(inVal.substr(1)); //user needs to see slash commands are received
         }
@@ -88,8 +82,12 @@ function takeTurn(inVal) {
         } 
 
         //Clear and target input blank
-        $("#txtYourMove").removeAttr("value");
-        $("#txtYourMove").select();
+        $("#txtYourMove").removeAttr("value").select();
+        
+        //hide username input once user has replaced default name
+        if($("#username").attr("value").search("user") == -1) {
+                $("#username").css('display', 'none');
+        }
 }
 
 // onload init stuff
@@ -100,8 +98,7 @@ $(document).ready(function() {
                 function () {
                         takeTurn($("#txtYourMove").attr("value"));
                 }); 
-        $("#txtYourMove").click( function() { $(this).select(); });
-        $("#txtYourMove").click();
+        $("#txtYourMove").click( function() { $(this).select(); }).click();
         //Submit on <ENTER>
         $("#txtYourMove").keypress(function(e) {
                 if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
