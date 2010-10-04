@@ -3,10 +3,10 @@ var toggler = (function() {
         var flag = true;
         return {
                 value: function() {
-                               (flag==true) ? flag = false : flag = true;
+                               flag = !flag;
                                return flag;
                        }
-        }
+        };
 })();
 
 //Display an alert in a colored box that fades out
@@ -15,7 +15,7 @@ function alertUser(alertText){
         $("#alerts").append(alertText);
         $("#alerts").stop(true, true).fadeIn(
                         500,
-                        function(){$("#alerts").fadeOut(3000)});
+                        function(){$("#alerts").fadeOut(3000);});
 }
 
 //Write a line to the chatbox on the page
@@ -33,23 +33,23 @@ function spitLine(contents, username) {
                         username + "</span>: " + contents;
         }
         //handle empty line
-        if(!contents) contents = '&nbsp;';
-        
+        if(!contents) {contents = '&nbsp;';}
+
         $(".gameout").append(
                         "<li>" +
                         contents +
                         "</li>");
         $(".gameout li:first").remove();
-        
+
         //zebra stripes
-        if(toggler.value()) {$(".gameout li:last").addClass("alt")};
-};
+        if(toggler.value()) {$(".gameout li:last").addClass("alt");}
+}
 
 //clears the chatbox by pushing empty lines
 function wipeScreen(printMe){
         for(i = 0; i < 10; i++) {spitLine();}
         spitLine(printMe);
-};
+}
 
 //Reads user input and passes it on to server via websocket.
 //Also checks for slash commands
@@ -70,10 +70,10 @@ function takeTurn(inVal) {
         {
                 if(inVal=="/clear"){
                         wipeScreen();
-                };
+                }
                 if((inVal.search("/name") != -1) || (inVal.search("/nick") != -1)){
                         $("#username").attr('value', inVal.substr(11));
-                };
+                }
                 alertUser(inVal.substr(1)); //user needs to see slash commands are received
         }
 
@@ -90,7 +90,7 @@ function takeTurn(inVal) {
         //Clear and target input blank
         $("#txtYourMove").removeAttr("value");
         $("#txtYourMove").select();
-};
+}
 
 // onload init stuff
 $(document).ready(function() {

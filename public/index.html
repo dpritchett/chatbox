@@ -1,9 +1,9 @@
 <html>
         <head>
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
-                <script type="text/javascript" src="http://plugins.jquery.com/files/jquery.md5.js.txt"></script>
-                <script type="text/javascript" src="chatbox.js"></script>
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+                <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+                <script src="http://plugins.jquery.com/files/jquery.md5.js.txt"></script>
+                <script src="chatbox.js"></script>
                 <script src="/socket.io/socket.io.js"></script>
                 <script>
                         //workaround for browsers without the console() option
@@ -20,7 +20,7 @@
                         });
                         socket.on('disconnect', function(){
                                 spitLine();
-                                spitLine("<strong>Connection lost.  Refresh page to continue.</strong>", "chatbot");
+                                spitLine("<strong>Connection lost.  Refresh page to continue.<\/strong>", "chatbot");
                                 $("#inputs").fadeOut();
                                 console.log('disconnected'); });
                         socket.connect();
@@ -44,9 +44,9 @@
                                 <li>&nbsp;</li>
                         </ul>
                         <div id="inputs">
-                                <input id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
+                                <input type="text" id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
                                 <button type="submit" tabindex="2">Enter</button>
-                                <input id="username" tabindex="3"/> 
+                                <input type="text" id="username" tabindex="3"/> 
                         </div>
                         <p id="alerts"></p>
                 </div>

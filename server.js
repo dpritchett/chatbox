@@ -56,13 +56,13 @@ socket.on('connection', function(client){
                                 console.log('DB error on input: ' +
                                         JSON.stringify(message) +
                                         JSON.stringify(er));
-                                throw new Error(JSON.stringify(er)) 
+                                throw new Error(JSON.stringify(er)); 
                         }	
                         else {
                                 client.broadcast(message);
                                 console.log('Wrote to couch: ' +
-                                        sys.inspect(message));};
+                                        sys.inspect(message));}
                 });
-        })
-        client.on('disconnect', function(){ console.log("Client disconnected") })
+        });
+        client.on('disconnect', function(){ console.log("Client disconnected"); });
 });
