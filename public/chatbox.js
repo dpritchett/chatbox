@@ -23,20 +23,21 @@ function spitLine(contents, username) {
                 var d = new Date();
                 contents = "<span class=\"timestamp\">[" + d.getHours() % 12 +
                         ":" +
-                        (100 + d.getMinutes()).toString().substring(1) + //force 2-digit minutes
+                        (d.getMinutes() + 100).toString().substring(1) + //force 2-digit minutes
                         "]</span> " +
                         "<span style=\"background-color: #" +
                         $.md5(username).substring(0,6) + //unique color for each username
                         "\">" +
-                        username + "</span>: " + contents;
+                        username + "<\/span>: " + contents;
         }
         //handle empty line
         if(!contents) {contents = '&nbsp;';}
 
+        //push new line to bottom of list while losing oldest line
         $(".gameout").append(
                         "<li>" +
                         contents +
-                        "</li>");
+                        "<\/li>");
         $(".gameout li:first").remove();
 
         //zebra stripes
@@ -59,14 +60,14 @@ function takeTurn(inVal) {
         inVal = inVal.replace("\"", "");
 
         //Detect and execute slash commands
-        if(inVal[0] == "/")
+        //strangely fails on IE
+        if(inVal[0] == "\/")
         {
-                if(inVal=="/clear"){
+                if(inVal=="\/clear"){
                         wipeScreen();
                 }
-                if((inVal.search("/name") != -1) || (inVal.search("/nick") != -1)){
+                if((inVal.search("\/name") != -1) || (inVal.search("\/nick") != -1)){
                         $("#username").attr('value', inVal.substr(11));
-
                 }
                 alertUser(inVal.substr(1)); //user needs to see slash commands are received
         }
@@ -83,7 +84,7 @@ function takeTurn(inVal) {
 
         //Clear and target input blank
         $("#txtYourMove").removeAttr("value").select();
-        
+
         //hide username input once user has replaced default name
         if($("#username").attr("value").search("user") == -1) {
                 $("#username").css('display', 'none');
