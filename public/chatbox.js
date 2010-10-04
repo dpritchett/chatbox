@@ -55,7 +55,7 @@ function wipeScreen(printMe){
 function takeTurn(inVal) {
         //clean up whitespace
         //need to sanitize inputs serverside too
-        inVal = inVal.replace(" ","&nbsp;").replace(/\\/gi, "").replace(/\"/gi, "");
+        inVal = inVal.replace(" ","&nbsp;").replace(/\\/gi/, "").replace(/\"/gi/, "");
 
         //Detect and execute slash commands
         if(inVal.charAt(0) == '/')
