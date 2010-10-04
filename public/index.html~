@@ -44,9 +44,9 @@
                                 <li>&nbsp;</li>
                         </ul>
                         <div id="inputs">
-                                <input id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
+                                <input type="text" id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
                                 <button type="submit" tabindex="2">Enter</button>
-                                <input id="username" tabindex="3"/> 
+                                <input type="text" id="username" tabindex="3"/> 
                         </div>
                         <p id="alerts"></p>
                 </div>
