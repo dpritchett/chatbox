@@ -61,7 +61,7 @@ function takeTurn(inVal) {
 
         //Detect and execute slash commands
         //strangely fails on IE
-        if(inVal[0] == "\/")
+        if(inVal.charAt(0) == '/')
         {
                 if(inVal=="\/clear"){
                         wipeScreen();
