@@ -9,6 +9,12 @@ var toggler = (function() {
         };
 })();
 
+var packet = {
+        name: "default_name",
+        content: "",
+        date: ""
+};
+
 //Display an alert in a colored box that fades in and then out
 function alertUser(alertText){
         $("#alerts").empty().append(alertText).stop(true, true).fadeIn(
@@ -20,8 +26,9 @@ function alertUser(alertText){
 function spitLine(contents, username) {
         //no username means no timestamp etc
         if(username) {
-                if(username == 'chatbot')
+                if(username == 'chatbot') {
                         contents = "<strong>" + contents + "</strong>";
+                }
                 var d = new Date();
                 contents = "<span class=\"timestamp\">[" +
                         ((d.getHours() % 12) || '12') + //12-hour time
@@ -60,11 +67,9 @@ function takeTurn(inVal) {
         //need to sanitize inputs serverside too
         inVal = inVal.replace(" ","&nbsp;").replace(/\\/gi, "").replace(/\"/gi, "");
 
-        var jstring = {
-                name: $("#username").attr('value'),
-                content: inVal,
-                date: (new Date()).getTime()
-        };
+        packet.name =  $("#username").attr('value');
+        packet.content =  inVal;
+        packet.date = (new Date()).getTime();
 
         //Detect and execute slash commands
         if(inVal.charAt(0) == '/')
@@ -72,11 +77,14 @@ function takeTurn(inVal) {
                 if(inVal=="\/clear"){
                         wipeScreen();
                 }
+                //switch username both on page and in packet
+                //alert server of the new name
                 if((inVal.search("\/name") != -1) || (inVal.search("\/nick") != -1)){
+                        packet.name = inVal.substr(11);
                         var msg = {
-                                name: inVal.substr(11),
+                                name: packet.name,
                                 system: "/nick"
-                        }
+                        };
                         $("#username").attr("value", msg.name);
                         socket.send(msg);
                 }
@@ -85,8 +93,8 @@ function takeTurn(inVal) {
 
         //Submit plaintext to server as JSON
         else if(inVal !="") {
-                socket.send(jstring);
-                spitLine(jstring.content, jstring.name);
+                socket.send(packet);
+                spitLine(packet.content, packet.name);
         } 
 
         //Clear and target input blank
@@ -113,7 +121,8 @@ $(document).ready(function() {
                         $("button").click();
                 }
         });
+        packet.name = $("#username").attr("value");
         socket.send({
-                name: $("#username").attr("value"),
+                name: packet.name,
                 system: "/nick"});
 });

@@ -42,12 +42,15 @@ console.log("Listening on port " + $PORT + " with backend at " +
                 $DB_SERVER + ":" + $DB_PORT);
 
 var $ = JSON.stringify;
-var usernames = new Array();
+var usernames = [];
 var users = 0;
 var userList = function(){
         var list = "";
-        for(var i in usernames)
-                list += usernames[i] + ' ';
+        for(var i in usernames) {
+                if(usernames.hasOwnProperty(i)){
+                        list += usernames[i] + ' ';
+                }
+        }
         return (list || "none.");
 };
 
@@ -60,7 +63,7 @@ socket.on('connection', function(client){
                         { content: "Welcome to chatbox! Other users online: " + userList(),
                                 name: "chatbot" }
                      ));
-        
+
 
         client.on('message', function(message){
                 if(usernames[client.sessionId]){
@@ -78,7 +81,7 @@ socket.on('connection', function(client){
                         }));
                 }
         usernames[client.sessionId] = message.name;
-        if(message.system) return;
+        if(message.system) {return;}
         //passing user message to Couch
         db.saveDoc(uuid.generate(), message, function (er, ok) {
                 if (er) {
