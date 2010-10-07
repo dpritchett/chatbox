@@ -20,6 +20,8 @@ function alertUser(alertText){
 function spitLine(contents, username) {
         //no username means no timestamp etc
         if(username) {
+                if(username == 'chatbot')
+                        contents = "<strong>" + contents + "</strong>";
                 var d = new Date();
                 contents = "<span class=\"timestamp\">[" +
                         ((d.getHours() % 12) || '12') + //12-hour time
