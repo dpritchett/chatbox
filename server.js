@@ -44,6 +44,12 @@ console.log("Listening on port " + $PORT + " with backend at " +
 var $ = JSON.stringify;
 var usernames = new Array();
 var users = 0;
+var userList = function(){
+        var list = "";
+        for(var i in usernames)
+                list += usernames[i] + ' ';
+        return list;
+};
 
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
@@ -51,9 +57,10 @@ socket.on('connection', function(client){
         users++;
 
         client.send($(
-                        { content: "Welcome to chatbox! Users online: " + users,
+                        { content: "Welcome to chatbox! Users online: " + userList(),
                                 name: "chatbot" }
                      ));
+        
 
         client.on('message', function(message){
                 if(usernames[client.sessionId]){
