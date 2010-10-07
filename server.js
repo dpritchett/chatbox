@@ -88,5 +88,6 @@ socket.on('connection', function(client){
                         $({
                                 content: usernames[client.sessionId] + ' disconnected',
                                 name: "chatbot"}));
+                delete usernames[client.sessionId];
         });
 });
