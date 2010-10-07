@@ -58,6 +58,12 @@ function takeTurn(inVal) {
         //need to sanitize inputs serverside too
         inVal = inVal.replace(" ","&nbsp;").replace(/\\/gi, "").replace(/\"/gi, "");
 
+        var jstring = {
+                name: $("#username").attr('value'),
+                content: inVal,
+                date: (new Date()).getTime()
+        };
+
         //Detect and execute slash commands
         if(inVal.charAt(0) == '/')
         {
@@ -72,21 +78,15 @@ function takeTurn(inVal) {
 
         //Submit plaintext to server as JSON
         else if(inVal !="") {
-                var jstring = {
-                        name: $('username').attr('value'),
-                        content: inVal,
-                        date: (new Date()).getTime()
-                };
-                console.log("Sending to server: " + $.parseJSON(jstring));
                 socket.send(jstring);
-                spitLine(inVal, $("#username").attr('value'));
+                spitLine(jstring.content, jstring.name);
         } 
 
         //Clear and target input blank
         $("#txtYourMove").removeAttr("value").select();
 
         //hide username input once user has replaced default name
-        if($("#username").attr("value").search("user") == -1) {
+        if(jstring.name.search("user") == -1) {
                 $("#username").css('display', 'none');
         }
 }

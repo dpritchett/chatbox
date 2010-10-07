@@ -61,7 +61,7 @@ socket.on('connection', function(client){
                                 throw new Error(JSON.stringify(er)); 
                         }	
                         else {
-                                client.broadcast(message);
+                                client.broadcast(JSON.stringify(message));
                                 console.log('Wrote to couch: ' +
                                         sys.inspect(message));}
                 });
