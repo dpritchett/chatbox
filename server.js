@@ -44,7 +44,9 @@ console.log("Listening on port " + $PORT + " with backend at " +
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
 socket.on('connection', function(client){
-        client.send('{"content": "Welcome to chatbox!", "name": "chatbot"}');
+        client.send(JSON.stringify(
+                        { content: "Welcome to chatbox!", name: "chatbot" }
+                        ));
         //incoming message on a socket
         // We're hoping to see some JSON that we can punt to CouchDB
         client.on('message', function(message){

@@ -72,10 +72,12 @@ function takeTurn(inVal) {
 
         //Submit plaintext to server as JSON
         else if(inVal !="") {
-                var jstring = '{ "name": "' + $('#username').attr('value') + '", ' +
-                        '"content": "' + inVal + '", ' +
-                                '"date": "' + (new Date()).getTime() + '" }';
-                console.log("Sending to server: " + jstring);
+                var jstring = {
+                        name: $('username').attr('value'),
+                        content: inVal,
+                        date: (new Date()).getTime()
+                };
+                console.log("Sending to server: " + $.parseJSON(jstring));
                 socket.send(jstring);
                 spitLine(inVal, $("#username").attr('value'));
         } 
