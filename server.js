@@ -48,7 +48,7 @@ var userList = function(){
         var list = "";
         for(var i in usernames)
                 list += usernames[i] + ' ';
-        return list;
+        return (list || "none.");
 };
 
 // Socket.io hooks into the server above and intercepts socket comms
@@ -57,7 +57,7 @@ socket.on('connection', function(client){
         users++;
 
         client.send($(
-                        { content: "Welcome to chatbox! Users online: " + userList(),
+                        { content: "Welcome to chatbox! Other users online: " + userList(),
                                 name: "chatbot" }
                      ));
         
