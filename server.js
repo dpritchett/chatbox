@@ -42,18 +42,26 @@ console.log("Listening on port " + $PORT + " with backend at " +
                 $DB_SERVER + ":" + $DB_PORT);
 
 var $ = JSON.stringify;
-var users = {
-        usernames : [],
-        userList : function(){
-                var list = "";
-                for(var i in this.usernames){
-                        if(this.usernames.hasOwnProperty(i)){
-                                list += this.usernames[i] + ' ';
-                        }
-                }
-                return (list || "none.");
-        } 
-};
+var users = (function(){
+        names = [];
+        return {
+                user: function(id, newval){
+                              if(newval){
+                                      names[id] = newval;
+                              };
+                              return names[id];
+                      },   
+    userList: function(){
+                      var list = "";
+                      for(var i in names){
+                              if(names.hasOwnProperty(i)){
+                                      list += names[i] + ' ';
+                              }
+                      }
+                      return (list || "none.");
+              } 
+        }
+})();
 
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
@@ -65,10 +73,10 @@ socket.on('connection', function(client){
 
 
         client.on('message', function(message){
-                if(users.usernames[client.sessionId]){
+                if(users.user(client.sessionId)){
                         client.broadcast($({
                                 name: "chatbot",
-                                content: users.usernames[client.sessionId] + " is now " +
+                                content: users.user(client.sessionId) + " is now " +
                                 message.name
                         }
                         ));
@@ -79,7 +87,7 @@ socket.on('connection', function(client){
                                 content: message.name + " connected."
                         }));
                 }
-        users.usernames[client.sessionId] = message.name;
+        users.user(client.sessionId, message.name);
         if(message.system) {return;}
         //passing user message to Couch
         db.saveDoc(uuid.generate(), message, function (er, ok) {
@@ -98,8 +106,9 @@ socket.on('connection', function(client){
         client.on('disconnect', function(){
                 client.broadcast(
                         $({
-                                content: users.usernames[client.sessionId] + ' disconnected',
-                                name: "chatbot"}));
-                delete users.usernames[client.sessionId];
+                                content: users.user(client.sessionId) + ' disconnected',
+                                name: "chatbot"
+                        }));
+                delete users.user(client.sessionId);
         });
 });
