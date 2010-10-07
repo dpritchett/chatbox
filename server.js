@@ -41,30 +41,52 @@ server.listen($PORT);
 console.log("Listening on port " + $PORT + " with backend at " +
                 $DB_SERVER + ":" + $DB_PORT);
 
+var usernames = new Array();
+
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
 socket.on('connection', function(client){
-        client.send(JSON.stringify(
+        var $ = JSON.stringify;
+        client.send($(
                         { content: "Welcome to chatbox!", name: "chatbot" }
-                        ));
+                     ));
         //incoming message on a socket
         // We're hoping to see some JSON that we can punt to CouchDB
         client.on('message', function(message){
-                console.log("MESG recvd: \"" + sys.inspect(message) + "\"");
-
-                //passing user message to Couch
-                db.saveDoc(uuid.generate(), message, function (er, ok) {
-                        if (er) {
-                                console.log('DB error on input: ' +
-                                        JSON.stringify(message) +
-                                        JSON.stringify(er));
-                                throw new Error(JSON.stringify(er)); 
-                        }	
-                        else {
-                                client.broadcast(JSON.stringify(message));
-                                console.log('Wrote to couch: ' +
-                                        sys.inspect(message));}
-                });
+                if(usernames[client.sessionId]){
+                        client.broadcast($({
+                                name: "chatbot",
+                                content: usernames[client.sessionId] + " is now " +
+                                message.name
+                        }
+                        ));
+                }
+                else {
+                        client.broadcast($({
+                                name: "chatbot",
+                                content: message.name + " connected."
+                        }));
+                }
+        usernames[client.sessionId] = message.name;
+        if(message.system) return;
+        //passing user message to Couch
+        db.saveDoc(uuid.generate(), message, function (er, ok) {
+                if (er) {
+                        console.log('DB error on input: ' +
+                                $(message) +
+                                $(er));
+                        throw new Error($(er)); 
+                }	
+                else {
+                        client.broadcast($(message));
+                        console.log('Wrote to couch: ' +
+                                sys.inspect(message));}
         });
-        client.on('disconnect', function(){ console.log("Client disconnected"); });
+        });
+        client.on('disconnect', function(){
+                client.broadcast(
+                        $({
+                                content: usernames[client.sessionId] + ' disconnected',
+                                name: "chatbot"}));
+        });
 });

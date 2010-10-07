@@ -71,7 +71,12 @@ function takeTurn(inVal) {
                         wipeScreen();
                 }
                 if((inVal.search("\/name") != -1) || (inVal.search("\/nick") != -1)){
-                        $("#username").attr('value', inVal.substr(11));
+                        var msg = {
+                                name: inVal.substr(11),
+                                system: "/nick"
+                        }
+                        $("#username").attr("value", msg.name);
+                        socket.send(msg);
                 }
                 alertUser(inVal.substr(1)); //user needs to see slash commands are received
         }
@@ -86,7 +91,7 @@ function takeTurn(inVal) {
         $("#txtYourMove").removeAttr("value").select();
 
         //hide username input once user has replaced default name
-        if(jstring.name.search("user") == -1) {
+        if($("#username").attr("value").search("user") == -1) {
                 $("#username").css('display', 'none');
         }
 }
@@ -106,4 +111,7 @@ $(document).ready(function() {
                         $("button").click();
                 }
         });
+        socket.send({
+                name: $("#username").attr("value"),
+                system: "/nick"});
 });
