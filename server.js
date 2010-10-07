@@ -41,17 +41,20 @@ server.listen($PORT);
 console.log("Listening on port " + $PORT + " with backend at " +
                 $DB_SERVER + ":" + $DB_PORT);
 
+var $ = JSON.stringify;
 var usernames = new Array();
+var users = 0;
 
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
 socket.on('connection', function(client){
-        var $ = JSON.stringify;
+        users++;
+
         client.send($(
-                        { content: "Welcome to chatbox!", name: "chatbot" }
+                        { content: "Welcome to chatbox! Users online: " + users,
+                                name: "chatbot" }
                      ));
-        //incoming message on a socket
-        // We're hoping to see some JSON that we can punt to CouchDB
+
         client.on('message', function(message){
                 if(usernames[client.sessionId]){
                         client.broadcast($({
@@ -89,5 +92,6 @@ socket.on('connection', function(client){
                                 content: usernames[client.sessionId] + ' disconnected',
                                 name: "chatbot"}));
                 delete usernames[client.sessionId];
+                users--;
         });
 });
