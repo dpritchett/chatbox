@@ -51,6 +51,9 @@ var users = (function(){
                               };
                               return names[id];
                       },   
+    deleteUser: function(id){
+                        delete names[id];
+                },
     userList: function(){
                       var list = "";
                       for(var i in names){
@@ -109,6 +112,6 @@ socket.on('connection', function(client){
                                 content: users.user(client.sessionId) + ' disconnected',
                                 name: "chatbot"
                         }));
-                delete users.user(client.sessionId);
+                users.deleteUser(client.sessionId);
         });
 });
