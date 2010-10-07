@@ -74,37 +74,25 @@ socket.on('connection', function(client){
                                 name: "chatbot" }
                      ));
 
-
         client.on('message', function(message){
-                if(users.user(client.sessionId)){
-                        client.broadcast($({
-                                name: "chatbot",
-                                content: users.user(client.sessionId) + " is now " +
-                                message.name
-                        }
-                        ));
-                }
-                else {
-                        client.broadcast($({
-                                name: "chatbot",
-                                content: message.name + " connected."
-                        }));
-                }
-        users.user(client.sessionId, message.name);
-        if(message.system) {return;}
-        //passing user message to Couch
-        db.saveDoc(uuid.generate(), message, function (er, ok) {
-                if (er) {
-                        console.log('DB error on input: ' +
-                                $(message) +
-                                $(er));
-                        throw new Error($(er)); 
-                }	
-                else {
-                        client.broadcast($(message));
-                        console.log('Wrote to couch: ' +
-                                sys.inspect(message));}
-        });
+
+                //todo: add anouncements and name changes back to the system
+  
+
+               if(message.system) {return;}
+                //passing user message to Couch
+                db.saveDoc(uuid.generate(), message, function (er, ok) {
+                        if (er) {
+                                console.log('DB error on input: ' +
+                                        $(message) +
+                                        $(er));
+                                throw new Error($(er)); 
+                        }	
+                        else {
+                                client.broadcast($(message));
+                                console.log('Wrote to couch: ' +
+                                        sys.inspect(message));}
+                });
         });
         client.on('disconnect', function(){
                 client.broadcast(
