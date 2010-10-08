@@ -16,11 +16,11 @@
                         socket.on('message', 
                         function(message){
                                 console.log('Message received: ' + message); 
-                                spitLine(message.content, message.name);
+                                window.chatbox.spitLine($.parseJSON(message).content, $.parseJSON(message).name);
                         });
                         socket.on('disconnect', function(){
-                                spitLine();
-                                spitLine("<strong>Connection lost.  Refresh page to continue.<\/strong>", "chatbot");
+                                window.chatbox.spitLine();
+                                window.chatbox.spitLine("<strong>Connection lost.  Refresh page to continue.<\/strong>", "chatbot");
                                         $("#inputs").fadeOut();
                                         console.log('disconnected'); });
                                 socket.connect();
