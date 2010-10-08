@@ -1,5 +1,2 @@
 #!/bin/bash
-coffee -c server.coffee
-coffee -c public/chatbox.coffee
-git commit -am \"$$\"
 git push origin master && git push joyent master 
