@@ -29,9 +29,11 @@
       var oldval;
       oldval = names[id];
       names[id] = newval;
-      return ("joined: " + (names[id]));
+      if (!(typeof oldval !== "undefined" && oldval !== null)) {
+        return ("joined: " + (names[id]));
+      }
       if (oldval !== newval) {
-        return ("" + (tmp) + " is now " + (newval));
+        return ("" + (oldval) + " is now " + (newval));
       }
       return '';
     },
@@ -40,7 +42,7 @@
     },
     list: function() {
       var _ref, _result, key, val;
-      (function() {
+      return (function() {
         _result = []; _ref = names;
         for (key in _ref) {
           if (!__hasProp.call(_ref, key)) continue;
@@ -49,7 +51,6 @@
         }
         return _result;
       })().join(' ');
-      return 'none.';
     }
   };
   json = JSON.stringify;
@@ -58,7 +59,7 @@
     var response;
     response = {
       name: "chatbot",
-      content: ("Welcome to chatbox! Other users online: " + (users.list()))
+      content: ("Welcome to chatbox! Other users online: " + (users.list() || 'none.'))
     };
     client.send(json(response));
     client.on('message', function(message) {

@@ -49,8 +49,8 @@ users =
         setName: (id, newval) ->
                 oldval = names[id]
                 names[id] = newval
-                return "joined: #{names[id]}"
-                return "#{tmp} is now #{newval}" if oldval isnt newval
+                return "joined: #{names[id]}" if not oldval?
+                return "#{oldval} is now #{newval}" if oldval isnt newval
                 ''
 
         destroy: (id) ->
@@ -58,8 +58,6 @@ users =
 
         list: ->
                 (val for key, val of names).join ' '
-                'none.'
-
 
 json = JSON.stringify
 
@@ -70,7 +68,7 @@ socket.on 'connection', (client) ->
 
         response =
                 name: "chatbot",
-                content: "Welcome to chatbox! Other users online: #{users.list()}"
+                content: "Welcome to chatbox! Other users online: #{users.list() or 'none.'}"
 
         client.send json response
 

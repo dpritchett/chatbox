@@ -84,7 +84,7 @@ window.chatbox =
                                 msg = { name: @packet.name, system: '/nick'}
                                 $('#username').attr "value", msg.name
                                 window.socket.send msg
-                        alertUser inVal.substr(1)       #user needs to see slash commands are received
+                        @alertUser inVal.substr(1)       #user needs to see slash commands are received
                 else if inVal isnt ''     #Submit plaintext to server as JSON
                         window.socket.send @packet
                         @spitLine @packet.content, @packet.name

@@ -74,7 +74,7 @@
           $('#username').attr("value", msg.name);
           window.socket.send(msg);
         }
-        alertUser(inVal.substr(1));
+        this.alertUser(inVal.substr(1));
       } else if (inVal !== '') {
         window.socket.send(this.packet);
         this.spitLine(this.packet.content, this.packet.name);
