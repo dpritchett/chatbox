@@ -42,6 +42,7 @@ console.log("Listening on port " + $PORT + " with backend at " +
                 $DB_SERVER + ":" + $DB_PORT);
 
 var $ = JSON.stringify;
+
 var users = (function(){
         var names = [];
         return {
@@ -61,7 +62,7 @@ var users = (function(){
                      else{
                              return "";
                      }
-                                  },   
+             },   
     destroy: function(id){
                      delete names[id];
              },
@@ -94,29 +95,29 @@ socket.on('connection', function(client){
                                 }));
                         }
 
-                return;
+                        return;
                 }
 
-        //passing user message to Couch
-        db.saveDoc(uuid.generate(), message, function (er, ok) {
-                if (er) {
-                        console.log('DB error on input: ' +
-                                $(message) +
-                                $(er));
-                        throw new Error($(er)); 
-                }	
-                else {
-                        client.broadcast($(message));
-                        console.log('Wrote to couch: ' +
-                                sys.inspect(message));}
+                //passing user message to Couch
+                db.saveDoc(uuid.generate(), message, function (er, ok) {
+                        if (er) {
+                                console.log('DB error on input: ' +
+                                        $(message) +
+                                        $(er));
+                                throw new Error($(er)); 
+                        }	
+                        else {
+                                client.broadcast($(message));
+                                console.log('Wrote to couch: ' +
+                                        sys.inspect(message));}
+                });
         });
-});
-client.on('disconnect', function(){
-        client.broadcast(
-                $({
-                        content: users.user(client.sessionId) + ' disconnected',
-                        name: "chatbot"
-                }));
-        users.destroy(client.sessionId);
-});
+        client.on('disconnect', function(){
+                client.broadcast(
+                        $({
+                                content: users.getName(client.sessionId) + ' disconnected',
+                                name: "chatbot"
+                        }));
+                users.destroy(client.sessionId);
+        });
 });
