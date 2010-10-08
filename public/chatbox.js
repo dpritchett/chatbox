@@ -1,4 +1,22 @@
 (function() {
+  $(document).ready(function() {
+    chatbox.wipeScreen();
+    $("#username").attr("value", "user " + (Math.floor(Math.random() * 1000)));
+    $("button").click(function() {
+      return chatbox.takeTurn($("#txtYourMove").attr("value"));
+    });
+    $("#txtYourMove").click(function() {
+      return $(this).select();
+    }).click();
+    $("#txtYourMove").keypress(function(e) {
+      return ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) ? $("button").click() : null;
+    });
+    chatbox.packet.name = $("#username").attr("value");
+    return socket.send({
+      name: chatbox.packet.name,
+      system: "onjoin"
+    });
+  });
   window.chatbox = {
     flag: false,
     toggler: function() {
@@ -16,7 +34,7 @@
       });
     },
     spitLine: function(contents, username) {
-      var _ref, d;
+      var d;
       if (typeof username !== "undefined" && username !== null) {
         if (username === 'chatbot') {
           contents = "<strong>" + contents + "</strong>";
@@ -29,7 +47,7 @@
       }
       $(".gameout").append("<li>" + (contents) + "<\/li>");
       $(".gameout li:first").remove();
-      return (typeof (_ref = this.toggler()) !== "undefined" && _ref !== null) ? $(".gameout li:last").addClass("alt") : null;
+      return this.toggler() ? $(".gameout li:last").addClass("alt") : null;
     },
     wipeScreen: function(printMe) {
       var i;
@@ -62,28 +80,10 @@
         alertUser(inVal.substr(1));
       } else if (inVal !== '') {
         window.socket.send(this.packet);
-        spitLine(this.packet.content, this.packet.name);
+        this.spitLine(this.packet.content, this.packet.name);
       }
       $("#txtYourMove").removeAttr("value").select();
       return $("#username").attr("value").search("user") === -1 ? $("#username").css('display', 'none') : null;
     }
   };
-  $(document).ready(function() {
-    window.chatbox.wipeScreen();
-    $("#username").attr("value", "user " + (Math.floor(Math.random() * 1000)));
-    $("button").click(function() {
-      return takeTurn($("#txtYourMove").attr("value"));
-    });
-    $("#txtYourMove").click(function() {
-      return $(this).select();
-    }).click();
-    $("#txtYourMove").keypress(function(e) {
-      return ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) ? $("button").click() : null;
-    });
-    this.packet.name = $("#username").attr("value");
-    return socket.send({
-      name: this.packet.name,
-      system: "onjoin"
-    });
-  });
 }).call(this);

@@ -1,4 +1,22 @@
-window.chatbox = 
+# onload init stuff
+$(document).ready () ->
+        chatbox.wipeScreen()
+        $("#username").attr "value",
+                "user #{Math.floor(Math.random() * 1000)}"
+        $("button").click () ->
+                chatbox.takeTurn($("#txtYourMove").attr("value"))
+        $("#txtYourMove").click( () ->
+                $(this).select()
+        ).click()
+
+        #Submit on <ENTER>
+        $("#txtYourMove").keypress (e) ->
+                if ((e.which and e.which is 13) or (e.keyCode and e.keyCode is 13))
+                        $("button").click()
+        chatbox.packet.name = $("#username").attr("value")
+        socket.send { name: chatbox.packet.name, system: "onjoin" }
+
+window.chatbox =
 
         flag: false
 
@@ -39,7 +57,7 @@ window.chatbox =
                 $(".gameout li:first").remove()
 
                 #zebra stripes
-                if @toggler()?
+                if @toggler()
                         $(".gameout li:last").addClass "alt"
 
         #Clears the chatbox by pushing empty lines
@@ -73,7 +91,7 @@ window.chatbox =
                         alertUser inVal.substr(1)       #user needs to see slash commands are received
                 else if inVal isnt ''     #Submit plaintext to server as JSON
                         window.socket.send @packet
-                        spitLine @packet.content, @packet.name
+                        @spitLine @packet.content, @packet.name
 
                 #Clear and target input blank
                 $("#txtYourMove").removeAttr("value").select()
@@ -81,21 +99,3 @@ window.chatbox =
                 #hide username input once user has replaced default name
                 if $("#username").attr("value").search("user") is -1
                         $("#username").css 'display', 'none'
-
-# onload init stuff
-$(document).ready () ->
-        window.chatbox.wipeScreen()
-        $("#username").attr "value",
-                "user #{Math.floor(Math.random() * 1000)}"
-        $("button").click () ->
-                takeTurn($("#txtYourMove").attr("value"))
-        $("#txtYourMove").click( () ->
-                $(this).select()
-        ).click()
-
-        #Submit on <ENTER>
-        $("#txtYourMove").keypress (e) ->
-                if ((e.which && e.which is 13) or (e.keyCode && e.keyCode is 13))
-                        $("button").click()
-        @packet.name = $("#username").attr("value")
-        socket.send { name: @packet.name, system: "onjoin"}
