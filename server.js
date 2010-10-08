@@ -75,26 +75,29 @@ var users = (function(){
                   }
                   return (list || "none.");
           } 
-        }
+        };
 })();
 
 // Socket.io hooks into the server above and intercepts socket comms
 var socket = io.listen(server);
 socket.on('connection', function(client){
-        client.send($(
-                        { content: "Welcome to chatbox! Other users online: " + users.list(),
-                                name: "chatbot" }
-                     ));
+        var response = {
+                name: "chatbot",
+        content: ""
+        };
+        client.send(
+                function(){
+                        response.content = "Welcome to chatbox! Other users online: " + users.list();
+                        return $(response);
+                }()
+                );
 
         client.on('message', function(message){
                 if(message.system){
                         if(message.system){
-                                client.broadcast($({
-                                        name: "chatbot",
-                                        content: users.setName(client.sessionId, message.name)
-                                }));
+                                response.content = users.setName(client.sessionId, message.name);
+                                client.broadcast($(response));
                         }
-
                         return;
                 }
 
@@ -112,12 +115,10 @@ socket.on('connection', function(client){
                                         sys.inspect(message));}
                 });
         });
+
         client.on('disconnect', function(){
-                client.broadcast(
-                        $({
-                                content: users.getName(client.sessionId) + ' disconnected',
-                                name: "chatbot"
-                        }));
+                response.content = users.getName(client.sessionId) + ' disconnected';
+                client.broadcast($(response));
                 users.destroy(client.sessionId);
         });
 });
