@@ -124,5 +124,5 @@ $(document).ready(function() {
         packet.name = $("#username").attr("value");
         socket.send({
                 name: packet.name,
-                system: "/nick"});
+                system: "~onjoin"});
 });

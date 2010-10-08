@@ -43,26 +43,37 @@ console.log("Listening on port " + $PORT + " with backend at " +
 
 var $ = JSON.stringify;
 var users = (function(){
-        names = [];
+        var names = [];
         return {
-                user: function(id, newval){
-                              if(newval){
-                                      names[id] = newval;
-                              };
-                              return names[id];
-                      },   
-    deleteUser: function(id){
-                        delete names[id];
-                },
-    userList: function(){
-                      var list = "";
-                      for(var i in names){
-                              if(names.hasOwnProperty(i)){
-                                      list += names[i] + ' ';
-                              }
-                      }
-                      return (list || "none.");
-              } 
+                getName: function(id){
+                                 return names[id];
+                         },
+    setName: function(id, newval){
+                     var tmp = names[id];
+                     if(!tmp){
+                             names[id] = newval;
+                             return "joined: " + names[id]; 
+                     }
+                     else if(tmp != newval){
+                             names[id] = newval;
+                             return tmp + " is now " + newval;
+                     }
+                     else{
+                             return "";
+                     }
+                                  },   
+    destroy: function(id){
+                     delete names[id];
+             },
+    list: function(){
+                  var list = "";
+                  for(var i in names){
+                          if(names.hasOwnProperty(i)){
+                                  list += names[i] + ' ';
+                          }
+                  }
+                  return (list || "none.");
+          } 
         }
 })();
 
@@ -70,36 +81,42 @@ var users = (function(){
 var socket = io.listen(server);
 socket.on('connection', function(client){
         client.send($(
-                        { content: "Welcome to chatbox! Other users online: " + users.userList(),
+                        { content: "Welcome to chatbox! Other users online: " + users.list(),
                                 name: "chatbot" }
                      ));
 
         client.on('message', function(message){
+                if(message.system){
+                        if(message.system){
+                                client.broadcast($({
+                                        name: "chatbot",
+                                        content: users.setName(client.sessionId, message.name)
+                                }));
+                        }
 
-                //todo: add anouncements and name changes back to the system
-  
+                return;
+                }
 
-               if(message.system) {return;}
-                //passing user message to Couch
-                db.saveDoc(uuid.generate(), message, function (er, ok) {
-                        if (er) {
-                                console.log('DB error on input: ' +
-                                        $(message) +
-                                        $(er));
-                                throw new Error($(er)); 
-                        }	
-                        else {
-                                client.broadcast($(message));
-                                console.log('Wrote to couch: ' +
-                                        sys.inspect(message));}
-                });
+        //passing user message to Couch
+        db.saveDoc(uuid.generate(), message, function (er, ok) {
+                if (er) {
+                        console.log('DB error on input: ' +
+                                $(message) +
+                                $(er));
+                        throw new Error($(er)); 
+                }	
+                else {
+                        client.broadcast($(message));
+                        console.log('Wrote to couch: ' +
+                                sys.inspect(message));}
         });
-        client.on('disconnect', function(){
-                client.broadcast(
-                        $({
-                                content: users.user(client.sessionId) + ' disconnected',
-                                name: "chatbot"
-                        }));
-                users.deleteUser(client.sessionId);
-        });
+});
+client.on('disconnect', function(){
+        client.broadcast(
+                $({
+                        content: users.user(client.sessionId) + ' disconnected',
+                        name: "chatbot"
+                }));
+        users.destroy(client.sessionId);
+});
 });
