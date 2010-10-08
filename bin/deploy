@@ -1,4 +1,4 @@
 #!/bin/bash
 coffee -c server.coffee
-git commit -am $$
+git commit -am \"$$\"
 git push origin master && git push joyent master 
