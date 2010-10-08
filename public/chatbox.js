@@ -1,7 +1,7 @@
 (function() {
   $(document).ready(function() {
     chatbox.wipeScreen();
-    $("#username").attr("value", "user " + (Math.floor(Math.random() * 1000)));
+    $("#username").attr("value", "user" + (Math.floor(Math.random() * 1000)));
     $("button").click(function() {
       return chatbox.takeTurn($("#txtYourMove").attr("value"));
     });
@@ -40,7 +40,7 @@
           contents = "<strong>" + contents + "</strong>";
         }
         d = new Date();
-        contents = '<span class=\"timestamp\">[' + ("" + ((d.getHours() % 12) || '12')) + ':' + (d.getMinutes() + 100).toString().substring(1) + ']</span><span style=\"background-color: #' + $.md5(username).substring(0, 6) + ("\">" + (username) + " <\/span>: " + (contents));
+        contents = '<span class=\"timestamp\">[' + ("" + ((d.getHours() % 12) || '12')) + ':' + (d.getMinutes() + 100).toString().substring(1) + ']</span><span style=\"background-color: #' + $.md5(username).substring(0, 6) + ("\">" + (username) + "<\/span>: " + (contents));
       }
       if (!(typeof contents !== "undefined" && contents !== null)) {
         contents = '&nbsp;';

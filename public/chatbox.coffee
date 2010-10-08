@@ -2,7 +2,7 @@
 $(document).ready () ->
         chatbox.wipeScreen()
         $("#username").attr "value",
-                "user #{Math.floor(Math.random() * 1000)}"
+                "user#{Math.floor(Math.random() * 1000)}"
         $("button").click () ->
                 chatbox.takeTurn($("#txtYourMove").attr("value"))
         $("#txtYourMove").click( () ->
@@ -47,7 +47,7 @@ window.chatbox =
                                 (d.getMinutes() + 100).toString().substring(1) + #force 2-digit minutes
                                 ']</span><span style=\"background-color: #' +
                                 $.md5(username).substring(0,6) + #unique color for each username
-                                "\">#{username} <\/span>: #{contents}"
+                                "\">#{username}<\/span>: #{contents}"
                 #handle empty line
                 unless contents?
                         contents = '&nbsp;'
