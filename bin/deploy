@@ -1,2 +1,7 @@
 #!/bin/bash
-git push origin master && git push joyent master 
+if
+        git push origin master
+        git push joyent master 
+then
+        node server.js
+fi
