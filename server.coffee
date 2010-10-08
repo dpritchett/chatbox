@@ -1,4 +1,3 @@
-#
 # Chatbox by Daniel J. Pritchett
 # 
 #  Use npm to install the packages by name e.g. npm install socket.io
@@ -9,7 +8,6 @@
 #    daniel@sharingatwork.com
 #    http://github.com/dpritchett
 #    http://twitter.com/dpritchett
-#
 
 $PORT = 80
 $DB_SERVER = 'dpritchett.couchone.com'
@@ -44,9 +42,11 @@ $ = JSON.stringify
 
 users = (() ->
         names = []
+
         return {
                 getName: (id) ->
                         return names[id]
+
                 setName: (id, newval) ->
                         tmp = names[id]
                         if not tmp
@@ -55,37 +55,39 @@ users = (() ->
                         else if tmp != newval
                                 names[id] = newval
                                 return tmp + " is now " + newval
-                        return ""
+                        else return ''
+
                 destroy: (id) ->
                         delete names[id]
+
                 list: () ->
-                        list = ""
+                        output = ""
                         for i in names
-                                if names.hasOwnProperty(i)
-                                        list += names[i] + ' '
-        }
-)()
+                                if names.hasOwnProperty i
+                                        output += names[i] + ' '
+                        return output
+                }
+        )()
+
 
 # Socket.io hooks into the server above and intercepts socket comms
 socket = io.listen server
 socket.on 'connection', (client) ->
         response = { name: "chatbot", content: "" }
 
-        client.send(
-                () -> {
-                        response.content = "Welcome to chatbox! Other users online: " + users.list()
-                        return $(response)
-                }()
-        )
+        client.send (() ->
+                response.content = "Welcome to chatbox! Other users online: " + users.list()
+                return $(response)
+                )()
 
         client.on 'message', (message) ->
                 if message.system
                         if message.system
-                                response.content = users.setName(client.sessionId), message.name
+                                response.content = users.setName client.sessionId, message.name
                                 client.broadcast $(response)
                         return
                 #passing user message to Couch
-                db.saveDoc(uuid.generate(), message, (er, ok) ->
+                db.saveDoc uuid.generate(), message, (er, ok) ->
                         if er
                                 console.log 'DB error on input: ' +
                                         $(message) +
@@ -96,8 +98,7 @@ socket.on 'connection', (client) ->
                                 console.log 'Wrote to couch: ' +
                                         sys.inspect message
 
-        client.on('disconnect', () ->
-                response.content = users.getName client.sessionId + ' disconnected'
+        client.on 'disconnect', () ->
+                response.content = users.getName(client.sessionId) + ' disconnected'
                 client.broadcast $(response)
                 users.destroy client.sessionId
-        )

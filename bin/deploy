@@ -1,2 +1,3 @@
 #!/bin/bash
+coffee server.coffee
 git push origin $1 && git push joyent $1
