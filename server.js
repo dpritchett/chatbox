@@ -1,5 +1,6 @@
 (function() {
   var Connect, DB_PORT, DB_SERVER, PORT, couchClient, couchdb, db, io, json, names, server, socket, sys, users, uuid;
+  var __hasProp = Object.prototype.hasOwnProperty;
   PORT = 80;
   DB_SERVER = 'dpritchett.couchone.com';
   DB_PORT = 80;
@@ -38,7 +39,17 @@
       return delete names[id];
     },
     list: function() {
-      return names.join(' ');
+      var _ref, _result, key, val;
+      (function() {
+        _result = []; _ref = names;
+        for (key in _ref) {
+          if (!__hasProp.call(_ref, key)) continue;
+          val = _ref[key];
+          _result.push(val);
+        }
+        return _result;
+      })().join(' ');
+      return 'none.';
     }
   };
   json = JSON.stringify;

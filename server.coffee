@@ -56,8 +56,10 @@ users =
         destroy: (id) ->
                 delete names[id]
 
-        list: () ->
-                names.join ' '
+        list: ->
+                (val for key, val of names).join ' '
+                'none.'
+
 
 json = JSON.stringify
 
