@@ -1,7 +1,3 @@
 #!/bin/bash
-if
-        git push origin master
-        git push joyent master 
-then
-        node server.js
-fi
+git push origin master
+git push joyent master 
