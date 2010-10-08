@@ -1,17 +1,17 @@
 # onload init stuff
-$(document).ready () ->
+$(document).ready ->
         chatbox.wipeScreen()
         $("#username").attr "value",
                 "user#{Math.floor(Math.random() * 1000)}"
-        $("button").click () ->
+        $("button").click ->
                 chatbox.takeTurn($("#txtYourMove").attr("value"))
-        $("#txtYourMove").click( () ->
+        $("#txtYourMove").click( ->
                 $(this).select()
         ).click()
 
         #Submit on <ENTER>
         $("#txtYourMove").keypress (e) ->
-                if ((e.which and e.which is 13) or (e.keyCode and e.keyCode is 13))
+                if (e.which and e.which is 13) or (e.keyCode and e.keyCode is 13)
                         $("button").click()
         chatbox.packet.name = $("#username").attr("value")
         socket.send { name: chatbox.packet.name, system: "onjoin" }
@@ -20,7 +20,7 @@ window.chatbox =
 
         flag: false
 
-        toggler: () ->
+        toggler: ->
                 @flag = not @flag
 
         packet:
@@ -30,7 +30,7 @@ window.chatbox =
 
         #Display an alert in a colored box that fades in and then out
         alertUser: (alertText) ->
-                $('#alerts').empty().append(alertText).stop(true, true).fadeIn(500, () -> $('#alerts').fadeOut(3000))
+                $('#alerts').empty().append(alertText).stop(true, true).fadeIn(500, -> $('#alerts').fadeOut(3000))
 
         #Write a line to the chatbox on the page
         spitLine: (contents, username) ->
@@ -60,10 +60,8 @@ window.chatbox =
 
         #Clears the chatbox by pushing empty lines
         wipeScreen: (printMe) ->
-                i = 0
-                while i < 10
+                for i in [0...10]
                         @spitLine()
-                        i++
                 @spitLine printMe
 
         #Reads user input and passes it on to server via websocket. Also checks for slash commands

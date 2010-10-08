@@ -9,7 +9,7 @@
       return $(this).select();
     }).click();
     $("#txtYourMove").keypress(function(e) {
-      return ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) ? $("button").click() : null;
+      return (e.which && e.which === 13) || (e.keyCode && e.keyCode === 13) ? $("button").click() : null;
     });
     chatbox.packet.name = $("#username").attr("value");
     return socket.send({
@@ -50,10 +50,8 @@
     },
     wipeScreen: function(printMe) {
       var i;
-      i = 0;
-      while (i < 10) {
+      for (i = 0; i < 10; i++) {
         this.spitLine();
-        i++;
       }
       return this.spitLine(printMe);
     },
