@@ -28,8 +28,6 @@ window.chatbox =
                 content: ''
                 date: ''
 
-        $: window.$
-
         #Display an alert in a colored box that fades in and then out
         alertUser: (alertText) ->
                 $('#alerts').empty().append(alertText).stop(true, true).fadeIn(500, () -> $('#alerts').fadeOut(3000))

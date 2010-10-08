@@ -27,7 +27,6 @@
       content: '',
       date: ''
     },
-    $: window.$,
     alertUser: function(alertText) {
       return $('#alerts').empty().append(alertText).stop(true, true).fadeIn(500, function() {
         return $('#alerts').fadeOut(3000);
