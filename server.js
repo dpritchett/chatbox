@@ -62,6 +62,7 @@
       content: ("Welcome to chatbox! Other users online: " + (users.list() || 'none.'))
     };
     client.send(json(response));
+    console.log("users: " + (users.list()));
     client.on('message', function(message) {
       if (message.system) {
         response.content = users.setName(client.sessionId, message.name);

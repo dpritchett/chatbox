@@ -71,6 +71,7 @@ socket.on 'connection', (client) ->
                 content: "Welcome to chatbox! Other users online: #{users.list() or 'none.'}"
 
         client.send json response
+        console.log "users: #{users.list()}"
 
         client.on 'message', (message) ->
                 if message.system
@@ -87,7 +88,7 @@ socket.on 'connection', (client) ->
                                 client.broadcast json message
                                 console.log "Wrote to couch: #{sys.inspect message}"
 
-        client.on 'disconnect', () ->
+        client.on 'disconnect', ->
                 response.content = users.getName(client.sessionId) + ' disconnected'
                 client.broadcast json response
                 users.destroy client.sessionId
