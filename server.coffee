@@ -71,7 +71,6 @@ socket.on 'connection', (client) ->
                 content: "Welcome to chatbox! Other users online: #{users.list() or 'none.'}"
 
         client.send json response
-        console.log "users: #{users.list()}"
 
         client.on 'message', (message) ->
                 if message.system
