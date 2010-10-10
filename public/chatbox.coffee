@@ -40,7 +40,7 @@ window.chatbox =
                         d = new Date()
                         contents =
                                 '<span class=\"timestamp\">[' +
-                                "#{((d.getHours() % 12) || '12')}" + #12-hour time
+                                "#{((d.getHours() % 12) or '12')}" + #12-hour time
                                 ':' +
                                 (d.getMinutes() + 100).toString().substring(1) + #force 2-digit minutes
                                 ']</span><span style=\"background-color: #' +
