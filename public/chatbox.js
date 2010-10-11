@@ -36,7 +36,7 @@
       var d;
       if (typeof username !== "undefined" && username !== null) {
         if (username === 'chatbot') {
-          contents = "<strong>" + contents + "</strong>";
+          contents = ("<strong>" + (contents) + "</strong>");
         }
         d = new Date();
         contents = '<span class=\"timestamp\">[' + ("" + ((d.getHours() % 12) || '12')) + ':' + (d.getMinutes() + 100).toString().substring(1) + ']</span><span style=\"background-color: #' + $.md5(username).substring(0, 6) + ("\">" + (username) + "<\/span>: " + (contents));
@@ -55,32 +55,40 @@
       }
       return this.spitLine(printMe);
     },
-    takeTurn: function(inVal) {
+    sendNameChange: function(newName) {
       var msg;
+      this.packet.name = newName;
+      msg = {
+        name: this.packet.name,
+        system: '/nick'
+      };
+      window.socket.send(msg);
+      $('#username').attr("value", msg.name);
+      return $("#username").css('display', 'none');
+    },
+    takeTurn: function(inVal) {
       inVal = inVal.replace(' ', '&nbsp;').replace(/\\/gi, '').replace(/\"/gi, '');
+      if ($("#username").css('display') !== 'none') {
+        if ($("#username").attr("value").search("user") === -1) {
+          this.sendNameChange($('#username').attr('value'));
+        }
+      }
       this.packet.name = $('#username').attr('value');
       this.packet.content = inVal;
       this.packet.date = (new Date()).getTime();
       if (inVal.charAt(0) === '/') {
-        if (inVal === '\/clear') {
+        if (inVal === "/clear") {
           wipeScreen();
         }
-        if (inVal.search('\/name') !== -1 || inVal.search('\/nick') !== -1) {
-          this.packet.name = inVal.substr(11);
-          msg = {
-            name: this.packet.name,
-            system: '/nick'
-          };
-          $('#username').attr("value", msg.name);
-          window.socket.send(msg);
+        if (!(inVal.search("/name") === -1 || inVal.search("/nick") === -1)) {
+          this.sendNameChange(inVal.substr(11));
         }
         this.alertUser(inVal.substr(1));
       } else if (inVal !== '') {
         window.socket.send(this.packet);
         this.spitLine(this.packet.content, this.packet.name);
       }
-      $("#txtYourMove").removeAttr("value").select();
-      return $("#username").attr("value").search("user") === -1 ? $("#username").css('display', 'none') : null;
+      return $("#txtYourMove").removeAttr("value").select();
     }
   };
 }).call(this);

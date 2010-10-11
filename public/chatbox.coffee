@@ -4,7 +4,7 @@ $(document).ready ->
         $("#username").attr "value",
                 "user#{Math.floor(Math.random() * 1000)}"
         $("button").click ->
-                chatbox.takeTurn($("#txtYourMove").attr("value"))
+                chatbox.takeTurn($("#txtYourMove").attr "value" )
         $("#txtYourMove").click( ->
                 $(this).select()
         ).click()
@@ -13,7 +13,8 @@ $(document).ready ->
         $("#txtYourMove").keypress (e) ->
                 if (e.which and e.which is 13) or (e.keyCode and e.keyCode is 13)
                         $("button").click()
-        chatbox.packet.name = $("#username").attr("value")
+
+        chatbox.packet.name = $("#username").attr "value"
         socket.send { name: chatbox.packet.name, system: "onjoin" }
 
 window.chatbox =
@@ -30,13 +31,17 @@ window.chatbox =
 
         #Display an alert in a colored box that fades in and then out
         alertUser: (alertText) ->
-                $('#alerts').empty().append(alertText).stop(true, true).fadeIn(500, -> $('#alerts').fadeOut(3000))
+                $('#alerts').empty().
+                        append(alertText).
+                        stop(true, true).
+                        fadeIn(500,
+                                -> $('#alerts').fadeOut(3000))
 
         #Write a line to the chatbox on the page
         spitLine: (contents, username) ->
                 if username?
                         if username is 'chatbot'
-                                contents = "<strong>" + contents + "</strong>"
+                                contents = "<strong>#{contents}</strong>"
                         d = new Date()
                         contents =
                                 '<span class=\"timestamp\">[' +
@@ -64,34 +69,45 @@ window.chatbox =
                         @spitLine()
                 @spitLine printMe
 
+        sendNameChange: (newName) ->
+                @packet.name  = newName
+                msg           = { name: @packet.name, system: '/nick'}
+                window.socket.send msg
+
+                #hide username input once user has replaced default name
+                $('#username').attr "value", msg.name
+                $("#username").css 'display', 'none'
+
         #Reads user input and passes it on to server via websocket. Also checks for slash commands
         takeTurn: (inVal) ->
                 #clean up whitespace
                 #need to sanitize inputs serverside too
-                inVal = inVal.replace(' ','&nbsp;').replace(/\\/gi, '').replace(/\"/gi, '')
+                inVal = inVal.replace(' ','&nbsp;').
+                        replace(/\\/gi, '').
+                        replace(/\"/gi, '')
 
-                @packet.name =  $('#username').attr('value')
+                unless $("#username").css('display') is 'none'
+                        if $("#username").attr("value").search("user") is -1
+                                @sendNameChange $('#username').attr 'value'
+
+                @packet.name    = $('#username').attr 'value'
                 @packet.content = inVal
-                @packet.date = (new Date()).getTime()
+                @packet.date    = (new Date()).getTime()
 
                 #Detect and execute slash commands
                 if inVal.charAt(0) is '/'
-                        if inVal is '\/clear'
+                        if inVal is "/clear"
                                 wipeScreen()
+
                         #switch username both on page and in packet; alert server of the new name
-                        if inVal.search('\/name') isnt -1 or inVal.search('\/nick') isnt -1
-                                @packet.name = inVal.substr 11
-                                msg = { name: @packet.name, system: '/nick'}
-                                $('#username').attr "value", msg.name
-                                window.socket.send msg
-                        @alertUser inVal.substr(1)       #user needs to see slash commands are received
-                else if inVal isnt ''     #Submit plaintext to server as JSON
+                        unless inVal.search("/name") is -1 or inVal.search("/nick") is -1
+                                @sendNameChange inVal.substr 11
+
+                        @alertUser inVal.substr 1     #user needs to see slash commands are received
+                else if inVal isnt ''                 #Submit plaintext to server as JSON
                         window.socket.send @packet
                         @spitLine @packet.content, @packet.name
 
                 #Clear and target input blank
                 $("#txtYourMove").removeAttr("value").select()
 
-                #hide username input once user has replaced default name
-                if $("#username").attr("value").search("user") is -1
-                        $("#username").css 'display', 'none'
