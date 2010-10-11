@@ -68,8 +68,7 @@
         system: '/nick'
       };
       window.socket.send(msg);
-      $('#username').attr("value", msg.name);
-      return $("#username").css('display', 'none');
+      return $('#username').attr("value", msg.name).css('display', 'none');
     },
     takeTurn: function(inVal) {
       var _ref;

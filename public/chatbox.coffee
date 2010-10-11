@@ -74,8 +74,8 @@ window.chatbox =
         window.socket.send msg
 
         #hide username input once user has replaced default name
-        $('#username').attr "value", msg.name
-        $("#username").css 'display', 'none'
+        $('#username').attr("value", msg.name).
+            css 'display', 'none'
 
     #Reads user input and passes it on to server via websocket. Also checks for slash commands
     takeTurn: (inVal) ->
@@ -99,7 +99,7 @@ window.chatbox =
         if inVal.charAt(0) is '/'
 
             if inVal is "/clear"
-                wipeScreen()
+                @wipeScreen()
 
             #switch username both on page and in packet; alert server of the new name
             unless inVal.search("/name") is inVal.search("/nick") is -1
