@@ -71,7 +71,7 @@
       return $('#username').attr("value", msg.name).css('display', 'none');
     },
     takeTurn: function(inVal) {
-      var _ref;
+      var _ref, tokens;
       if ($("#username").css('display') !== 'none') {
         if ($("#username").attr('value').search('user') === -1) {
           this.sendNameChange($('#username').attr('value'));
@@ -83,11 +83,13 @@
       this.packet.content = inVal;
       this.packet.date = (new Date()).getTime();
       if (inVal.charAt(0) === '/') {
-        if (inVal === "/clear") {
-          wipeScreen();
+        tokens = inVal.split('&nbsp;');
+        console.log(tokens);
+        if (tokens[0] === "/clear") {
+          this.wipeScreen();
         }
-        if (!((inVal.search("/name") === (_ref = inVal.search("/nick"))) && (_ref === -1))) {
-          this.sendNameChange(inVal.substr(11));
+        if (("/name" === (_ref = tokens[0]) || "/nick" === _ref)) {
+          this.sendNameChange(tokens[1]);
         }
         this.alertUser(inVal.substr(1));
       } else if (inVal !== '') {

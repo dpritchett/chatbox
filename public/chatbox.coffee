@@ -97,15 +97,17 @@ window.chatbox =
 
         #Detect and execute slash commands
         if inVal.charAt(0) is '/'
+            tokens = inVal.split '&nbsp;'
 
-            if inVal is "/clear"
+            if tokens[0] is "/clear"
                 @wipeScreen()
 
             #switch username both on page and in packet; alert server of the new name
-            unless inVal.search("/name") is inVal.search("/nick") is -1
-                @sendNameChange inVal.substr 11
+            #unless inVal.search("/name") is inVal.search("/nick") is -1
+            if tokens[0] in ["/name", "/nick"]
+                @sendNameChange tokens[1]
 
-            @alertUser inVal.substr 1     #user needs to see slash commands are received
+            @alertUser inVal     #user needs to see slash commands are received
 
         else if inVal isnt ''                 #Submit plaintext to server as JSON
             window.socket.send @packet
