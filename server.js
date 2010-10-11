@@ -62,25 +62,25 @@
       content: ("Welcome to chatbox! Other users online: " + (users.list() || 'none.'))
     };
     client.send(json(response));
-    return client.on('message', function(message) {
+    client.on('message', function(message) {
       var _ref;
       if (typeof (_ref = message.system) !== "undefined" && _ref !== null) {
         response.content = users.setName(client.sessionId, message.name);
         socket.broadcast(json(response));
         return null;
       }
-      db.saveDoc(uuid.generate(), message, function(err, ok) {
+      return db.saveDoc(uuid.generate(), message, function(err, ok) {
         if (!(typeof err !== "undefined" && err !== null)) {
           client.broadcast(json(message));
-          console.log("Wrote to couch: " + (sys.inspect(message)));
+          return console.log("Wrote to couch: " + (sys.inspect(message)));
         } else {
           console.log("DB error on input: " + (sys.inspect(message)) + " " + (sys.inspect(err)));
           throw new Error(err);
         }
-        return client.on('disconnect', function() {
-          return (response.content = ("" + (users.getName(client.sessionId)) + " disconnected"));
-        });
       });
+    });
+    return client.on('disconnect', function() {
+      response.content = ("" + (users.getName(client.sessionId)) + " disconnected");
       client.broadcast(json(response));
       return users.destroy(client.sessionId);
     });
