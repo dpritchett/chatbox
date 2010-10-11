@@ -93,6 +93,7 @@
         this.alertUser(inVal.substr(1));
       } else if (inVal !== '') {
         window.socket.send(this.packet);
+        this.spitLine(this.packet.content, this.packet.name);
       }
       return $("#txtYourMove").removeAttr("value").select();
     }

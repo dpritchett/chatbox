@@ -109,7 +109,7 @@ window.chatbox =
 
     else if inVal isnt ''                 #Submit plaintext to server as JSON
       window.socket.send @packet
-      #@spitLine @packet.content, @packet.name
+      @spitLine @packet.content, @packet.name
 
     #Clear and target input blank
     $("#txtYourMove").
