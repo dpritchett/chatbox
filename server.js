@@ -65,7 +65,7 @@
     client.on('message', function(message) {
       if (message.system) {
         response.content = users.setName(client.sessionId, message.name);
-        client.broadcast(json(response));
+        socket.broadcast(json(response));
         return null;
       }
       return db.saveDoc(uuid.generate(), message, function(err, ok) {

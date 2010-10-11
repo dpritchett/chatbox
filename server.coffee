@@ -76,7 +76,7 @@ socket.on 'connection', (client) ->
         client.on 'message', (message) ->
                 if message.system
                         response.content = users.setName client.sessionId, message.name
-                        client.broadcast json response
+                        socket.broadcast json response
                         return
 
                 #Passing user message to Couch
