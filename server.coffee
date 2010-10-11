@@ -34,7 +34,8 @@ server = Connect.createServer(
                 res.writeHead 200, 'Content-Type': 'text/plain'
                 res.write 'Hello World'
                 res.end()
-)
+
+        )
 
 server.listen PORT
 console.log "Listening on port #{PORT} with backend at #{DB_SERVER}: #{DB_PORT}"
