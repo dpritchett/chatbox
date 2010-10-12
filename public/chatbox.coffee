@@ -3,6 +3,7 @@ $(document).ready ->
     chatbox.wipeScreen()
     $("#username").attr "value",
         "user#{Math.floor(Math.random() * 1000)}"
+        $("#username").focusout( -> chatbox.sendNameChange $(this).attr "value")
     $("button").click ->
         chatbox.takeTurn($("#txtYourMove").attr "value" )
     $("#txtYourMove").click( ->

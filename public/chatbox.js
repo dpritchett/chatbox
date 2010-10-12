@@ -1,7 +1,9 @@
 (function() {
   $(document).ready(function() {
     chatbox.wipeScreen();
-    $("#username").attr("value", "user" + (Math.floor(Math.random() * 1000)));
+    $("#username").attr("value", "user" + (Math.floor(Math.random() * 1000)), $("#username").focusout(function() {
+      return chatbox.sendNameChange($(this).attr("value"));
+    }));
     $("button").click(function() {
       return chatbox.takeTurn($("#txtYourMove").attr("value"));
     });
