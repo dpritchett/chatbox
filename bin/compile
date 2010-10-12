@@ -1,0 +1,1 @@
+coffee -c server.coffee && coffee -c public/chatbox.coffee && docco server.coffee public/chatbox.coffee

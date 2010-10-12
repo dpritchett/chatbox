@@ -1,0 +1,57 @@
+<html>
+        <head>
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+                <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+                <script src="/lib/jquery.md5.js"></script>
+                <script src="chatbox.js"></script>
+                <script src="/socket.io/socket.io.js"></script>
+                <script>
+                        //workaround for browsers without the console() option
+                        if (typeof console == "undefined" || typeof console.log == "undefined") {
+                                var console = { log: function() {} }; }
+
+
+                        var socket = new io.Socket();
+                        socket.on('connect', function(){ console.log('connected'); });
+                        socket.on('message', 
+                        function(message){
+                                console.log('Message received: ' + message); 
+                                chatbox.spitLine($.parseJSON(message).content, $.parseJSON(message).name);
+                        });
+                        socket.on('disconnect', function(){
+                                chatbox.spitLine();
+                                chatbox.spitLine("<strong>Connection lost.  Refresh page to continue.<\/strong>", "chatbot");
+                                        $("#inputs").fadeOut();
+                                        console.log('disconnected'); });
+                                socket.connect();
+                        </script>
+                        <link rel="stylesheet" type="text/css" href="./chatbox.css">
+                        <title>Daniel's JS chatbox</title>
+                </head>
+                <body>
+                        <div id="container">
+                                <h1>Welcome to chatbox!</h1> 
+                                <ul class="gameout">
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                        <li>&nbsp;</li>
+                                </ul>
+                                <div id="inputs">
+                                        <input type="text" id="txtYourMove" tabindex="1" size="55" value="Say something and press Enter"/>
+                                        <button type="submit" tabindex="2">Enter</button>
+                                        <input type="text" id="username" tabindex="3"/> 
+                                </div>
+                                <p id="alerts"></p>
+                        </div>
+                        <div id="footer">
+                                Written by <a href="http://sharingatwork.com">Daniel J. Pritchett</a>.  View source on <a href="http://github.com/dpritchett/chatbox">github</a>, hosting by <a href="http://no.de">Joyent</a>.
+                        </div>
+                </body>
+        </html>

@@ -1,0 +1,4 @@
+#!/bin/bash
+rm ./*~ && rm ./public/*~
+git push origin master
+git push joyent master 
