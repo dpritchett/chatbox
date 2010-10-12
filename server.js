@@ -79,10 +79,10 @@
         }
       });
     });
-    client.on('disconnect', function() {
-      return (response.content = ("" + (users.getName(client.sessionId)) + " disconnected"));
+    return client.on('disconnect', function() {
+      response.content = ("" + (users.getName(client.sessionId)) + " disconnected");
+      client.broadcast(json(response));
+      return users.destroy(client.sessionId);
     });
-    client.broadcast(json(response));
-    return users.destroy(client.sessionId);
   });
 }).call(this);

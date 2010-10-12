@@ -92,5 +92,5 @@ socket.on 'connection', (client) ->
     client.on 'disconnect', ->
         response.content = "#{users.getName(client.sessionId)} disconnected"
 
-    client.broadcast json response
-    users.destroy client.sessionId
+        client.broadcast json response
+        users.destroy client.sessionId

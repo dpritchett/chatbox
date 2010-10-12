@@ -44,10 +44,10 @@
         if (username === 'chatbot') {
           contents = ("<strong>" + (contents) + "</strong>");
         }
-        contents = '<span class=\"timestamp\">[' + ("" + ((d.getHours() % 12) || '12') + ":") + (d.getMinutes() + 100).toString().substring(1) + ']</span><span style=\"background-color: #' + $.md5(username).substring(0, 6) + ("\">" + (username) + "<\/span>: " + (contents));
+        contents = '<span class=\"timestamp\">[' + ("" + ((d.getHours() % 12) || '12') + ":") + (d.getMinutes() + 100).toString().substring(1) + ']</span><span style=\"background-color: #' + $.md5(username).substring(0, 6) + ("\">" + (username) + "</span>: " + (contents));
       }
       contents = (typeof contents !== "undefined" && contents !== null) ? contents : '&nbsp;';
-      $(".gameout").append("<li>" + (contents) + "<\/li>");
+      $(".gameout").append("<li>" + (contents) + "</li>");
       $(".gameout li:first").remove();
       if (!(this.toggler())) {
         return $(".gameout li:last").addClass("alt");
