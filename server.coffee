@@ -28,7 +28,7 @@ PORT        = 80
 DB_SERVER   = 'dpritchett.couchone.com'
 DB_PORT     = 80
 
-# We're currently logging to a couchdb on [couchone.com](http://couchdb.com)
+# We're currently logging to a couchdb on [couchone.com](http://couchone.com)
 # even though we're not yet pulling out any data.
 
 couchdb     = require 'couchdb'
