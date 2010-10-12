@@ -118,8 +118,10 @@ window.chatbox =
             tokens = inVal.split '&nbsp;'
 
             switch tokens[0]
-                when "/clear", "/wipe" then @wipeScreen()
-                when "/name", "/nick" then @sendNameChange tokens[1]
+                when "/clear", "/wipe"
+                    @wipeScreen()
+                when "/name", "/nick"
+                    @sendNameChange tokens[1]
 
             # Give visual feedback on slash commands.
             @alertUser inVal
