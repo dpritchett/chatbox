@@ -83,13 +83,13 @@
       this.packet.date = (new Date()).getTime();
       if (inVal.charAt(0) === '/') {
         tokens = inVal.split('&nbsp;');
-        switch (tokens[0]) {
-          case "/clear":
-          case "/wipe":
+        switch (tokens[0].replace("/", '')) {
+          case "clear":
+          case "wipe":
             this.wipeScreen();
             break;
-          case "/name":
-          case "/nick":
+          case "name":
+          case "nick":
             this.sendNameChange(tokens[1]);
             break;
         }

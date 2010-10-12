@@ -117,10 +117,10 @@ window.chatbox =
         if inVal.charAt(0) is '/'
             tokens = inVal.split '&nbsp;'
 
-            switch tokens[0]
-                when "/clear", "/wipe"
+            switch tokens[0].replace "/", ''
+                when "clear", "wipe"
                     @wipeScreen()
-                when "/name", "/nick"
+                when "name", "nick"
                     @sendNameChange tokens[1]
 
             # Give visual feedback on slash commands.
