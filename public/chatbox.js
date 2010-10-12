@@ -21,9 +21,6 @@
       system: "onjoin"
     });
   });
-  /* This window.chatbox class is going to be referred to by some inline JS on index.html
-  as well as from within the onload business above
-  */
   window.chatbox = {
     flag: false,
     toggler: function() {
@@ -80,7 +77,7 @@
           return this.takeTurn(inVal);
         }
       }
-      inVal = inVal.replace(' ', '&nbsp;'.replace(/\\/gi, ''.replace(/\"/gi, '')));
+      inVal = inVal.replace(' ', '&nbsp;').replace(/\\/gi, '').replace(/\"/gi, '');
       this.packet.name = $('#username').attr('value');
       this.packet.content = inVal;
       this.packet.date = (new Date()).getTime();

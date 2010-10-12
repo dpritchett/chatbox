@@ -1,6 +1,9 @@
 # **Chatbox** is a websockets-based chat room built on
 # [node.js](http://nodejs.org) and [socket.io](http://socket.io). You can see
 # chatbox in action at [dpritchett.no.de](http://dpritchett.no.de)
+#
+# Read companion file **[public/chatbox.coffee](/docs/chatbox.html)**
+# to better understand chatbox.
 # 
 # Use [npm](http://npmjs.org/) to install the packages by name:
 #
