@@ -28,7 +28,7 @@ $(document).ready ->
 # ### Define window.chatbox class for export
 #
 # This class is going to be referred to by some inline JS on `index.html`
-# as well as from within the onload business above
+# as well as from within the onload business above.
 
 window.chatbox =
 
