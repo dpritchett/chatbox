@@ -2,7 +2,7 @@
 
 # ### Initialization
 
-# Set up the UI and say hi to the server.
+# Set up the UI and **say hi to the server**.
 $(document).ready ->
     chatbox.wipeScreen()
 
@@ -21,7 +21,7 @@ $(document).ready ->
     $("#txtYourMove").keypress (e) ->
         $("button").click() if e.keyCode is 13   #Submit on <ENTER>
 
-    # Ping the server with our newly generated username.
+    # **Ping the server with our newly generated username.**
     chatbox.packet.name = $("#username").attr "value"
     socket.send { name: chatbox.packet.name, system: "onjoin" }
 
@@ -82,7 +82,7 @@ window.chatbox =
             @spitLine()
         @spitLine printMe
 
-    # Alert the server when the user changes her name.
+    # **Alert the server when the user changes her name.**
     sendNameChange: (newName) ->
         @packet.name  = newName
         msg           = { name: @packet.name, system: '/nick'}
@@ -92,10 +92,10 @@ window.chatbox =
         $('#username').attr("value", msg.name).
             css 'display', 'none'
 
-    # Read user input and pass it on to the server via websocket.
+    # Read user input and **pass it on to the server** via websocket.
     # Also check for slash commands.
     takeTurn: (inVal) ->
-        # If we have a new name, alert the server and retry `@takeTurn()`
+        # If we have a new name, **alert the server** and retry `@takeTurn()`
         # with the same input.
         unless $("#username").css('display') is 'none'
             if $("#username").attr('value').search('user') is -1
@@ -120,14 +120,14 @@ window.chatbox =
                 @wipeScreen()
 
             # Switch username both on page and in `packet`;
-            # alert server of the new name.
+            # **alert server of the new name**.
             if tokens[0] in ["/name", "/nick"]
                 @sendNameChange tokens[1]
 
             # Give visual feedback on slash commands.
             @alertUser inVal
 
-        # Submit plaintext to server as JSON.
+        # **Submit plaintext to server as JSON.**
         else if inVal isnt ''
             window.socket.send @packet
             @spitLine @packet.content, @packet.name
