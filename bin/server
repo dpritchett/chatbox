@@ -1,6 +1,6 @@
 #!/bin/bash
 if
-        coffee -c server.coffee && coffee -c public/chatbox.coffee
+        coffee -c server.coffee && coffee -c public/chatbox.coffee  && docco ./*.coffee && docco public/*.coffee
 then
         node ./server.js
 fi
