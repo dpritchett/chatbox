@@ -1,6 +1,7 @@
 # Frontend communications and animation for [chatbox](/docs/server.html).
 
 # ### Initialize window and say hi to the server
+
 $(document).ready ->
     # Empty the chatbox.
     chatbox.wipeScreen()
