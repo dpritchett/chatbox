@@ -50,13 +50,13 @@ window.chatbox =
                 (d.getMinutes() + 100).toString().substring(1) +  #force 2-digit minutes
                 ']</span><span style=\"background-color: #' +
                 $.md5(username).substring(0,6) +                  #unique color for each username
-                "\">#{username}<\/span>: #{contents}"
+                "\">#{username}</span>: #{contents}"
 
         #handle empty line
         contents ?= '&nbsp;'
 
         #push new line to bottom of list while losing oldest line
-        $(".gameout").append "<li>#{contents}<\/li>"
+        $(".gameout").append "<li>#{contents}</li>"
         $(".gameout li:first").remove()
 
         #zebra stripes

@@ -11,7 +11,7 @@
   couchdb = require('couchdb');
   couchClient = couchdb.createClient(DB_PORT, DB_SERVER);
   db = couchClient.db('chatbox');
-  server = Connect.createServer(Connect.logger(), Connect.staticProvider(__dirname + '/public'), function(req, res) {
+  server = Connect.createServer(Connect.logger(), Connect.staticProvider("" + (__dirname) + "/public"), function(req, res) {
     res.writeHead(200, {
       'Content-Type': 'text/plain'
     });
@@ -79,10 +79,10 @@
         }
       });
     });
-    return client.on('disconnect', function() {
-      response.content = ("" + (users.getName(client.sessionId)) + " disconnected");
-      client.broadcast(json(response));
-      return users.destroy(client.sessionId);
+    client.on('disconnect', function() {
+      return (response.content = ("" + (users.getName(client.sessionId)) + " disconnected"));
     });
+    client.broadcast(json(response));
+    return users.destroy(client.sessionId);
   });
 }).call(this);

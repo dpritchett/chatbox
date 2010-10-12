@@ -84,14 +84,13 @@
       this.packet.date = (new Date()).getTime();
       if (inVal.charAt(0) === '/') {
         tokens = inVal.split('&nbsp;');
-        console.log(tokens);
         if (tokens[0] === "/clear") {
           this.wipeScreen();
         }
         if (("/name" === (_ref = tokens[0]) || "/nick" === _ref)) {
           this.sendNameChange(tokens[1]);
         }
-        this.alertUser(inVal.substr(1));
+        this.alertUser(inVal);
       } else if (inVal !== '') {
         window.socket.send(this.packet);
         this.spitLine(this.packet.content, this.packet.name);

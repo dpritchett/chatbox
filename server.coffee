@@ -28,7 +28,7 @@ server = Connect.createServer(
 
     Connect.logger()
 
-    Connect.staticProvider __dirname + '/public'
+    Connect.staticProvider "#{__dirname}/public"
 
     (req, res) ->
         res.writeHead 200, 'Content-Type': 'text/plain'
@@ -73,7 +73,7 @@ socket.on 'connection', (client) ->
 
     client.send json response
 
-    client.on 'message', (message) ->
+    client.on 'message', ( (message) ->
         if message.system?
             response.content = users.setName client.sessionId, message.name
             socket.broadcast json response
@@ -85,11 +85,12 @@ socket.on 'connection', (client) ->
                 client.broadcast json message
                 console.log "Wrote to couch: #{sys.inspect message}"
             else   #if error
-                console.log "DB error on input: #{sys.inspect(message)} #{sys.inspect(err)}"
+                console.log "DB error on input: #{sys.inspect message } #{sys.inspect err }"
                 throw new Error err
+            )
 
     client.on 'disconnect', ->
         response.content = "#{users.getName(client.sessionId)} disconnected"
 
-        client.broadcast json response
-        users.destroy client.sessionId
+    client.broadcast json response
+    users.destroy client.sessionId
