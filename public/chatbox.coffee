@@ -33,7 +33,7 @@ $(document).ready ->
 
 window.chatbox =
 
-    flag: false
+    flag: no
 
     # The `toggler()` facilitates zebra striping of the chatbox.
     toggler: ->
@@ -49,7 +49,7 @@ window.chatbox =
     alertUser: (alertText) ->
         $('#alerts').empty()  .
             append(alertText) .
-            stop(true, true)  .
+            stop(yes, yes)  .
             fadeIn(500,
                 -> $('#alerts').fadeOut(3000))
 
