@@ -1,9 +1,9 @@
 # **Chatbox** is a websockets-based chat room built on
-# [node.js](http://nodejs.org) and [socket.io](http://socket.io). You can see
-# chatbox in action at [dpritchett.no.de](http://dpritchett.no.de)
+# [node.js](http://nodejs.org) and [socket.io](http://socket.io).
+# Read **[chatbox.coffee](/docs/chatbox.html)** to understand the frontend.
 #
-# Read companion file **[public/chatbox.coffee](/docs/chatbox.html)**
-# to better understand chatbox.
+# You can see chatbox in action at [dpritchett.no.de](http://dpritchett.no.de).
+#
 # 
 # Use [npm](http://npmjs.org/) to install the packages by name:
 #
@@ -11,7 +11,7 @@
 #
 #  Development begun September 2010 as a JavaScript exploration.
 #
-# ####  Contact: 
+# ####  Contact 
 #
 #  *  [daniel@sharingatwork.com](mailto:daniel@sharingatwork.com)
 #  *  [github.com/dpritchett](http://github.com/dpritchett)
