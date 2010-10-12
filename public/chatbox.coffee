@@ -86,7 +86,7 @@ window.chatbox =
     # **Alert the server when the user changes her name.**
     sendNameChange: (newName) ->
         @packet.name  = newName
-        msg           = { name: @packet.name, system: '/nick'}
+        msg           = { name: @packet.name, system: '/nick' }
         window.socket.send msg
 
         # Hide username input field once the user has replaced the default name.
