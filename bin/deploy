@@ -1,11 +1,7 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
+if
+    bin/compile
+then
+    bin/publish
+fi
 
-cmds = []
-cmds << "git co gh-pages"
-cmds << "git merge master"
-cmds << "git push origin gh-pages"
-cmds << "git co master"
-cmds << "git push origin master"
-cmds << "git push joyent master"
-
-system cmds.join("&&")
