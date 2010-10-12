@@ -1,9 +1,9 @@
 # Frontend communications and animation for [chatbox](/docs/server.html).
 
-# ### Initialize window and say hi to the server
+# ### Initialization
 
+# Set up the UI and say hi to the server.
 $(document).ready ->
-    # Empty the chatbox.
     chatbox.wipeScreen()
 
     # Assign a randomized username.
@@ -34,11 +34,11 @@ window.chatbox =
 
     flag: false
 
-    # The toggler() facilitates zebra striping of the chatbox.
+    # The `toggler()` facilitates zebra striping of the chatbox.
     toggler: ->
         @flag = not @flag
 
-    # This packet will be reused for our JSON communications with the server.
+    # This `packet` will be reused for our JSON communications with the server.
     packet:
         name: 'default_name'
         content: ''
@@ -52,7 +52,7 @@ window.chatbox =
             fadeIn(500,
                 -> $('#alerts').fadeOut(3000))
 
-    #Write a line to the chatbox on the page.
+    # Write a line to the chatbox on the page.
     spitLine: (contents, username) ->
         if username?
             d = new Date()
@@ -66,17 +66,17 @@ window.chatbox =
                 $.md5(username).substring(0,6) +                  #unique color for each username
                 "\">#{username}</span>: #{contents}"
 
-        # Handle empty input.
+        # Handle empty input by packing in a `&nbsp`.
         contents ?= '&nbsp;'
 
-        # Push new line to bottom of list while dropping the oldest line.
+        # Push a new line to bottom of list and drop the oldest line.
         $(".gameout").append "<li>#{contents}</li>"
         $(".gameout li:first").remove()
 
-        #Add zebra stripes to every other line pushed to the chatbox.
+        # Add zebra stripes to every other line pushed to the chatbox.
         $(".gameout li:last").addClass "alt" unless @toggler()
 
-    # Clears the chatbox by overflowing it with empty lines.
+    # Clear the chatbox by overflowing it with empty lines.
     wipeScreen: (printMe) ->
         for i in [0...10]
             @spitLine()
@@ -88,14 +88,14 @@ window.chatbox =
         msg           = { name: @packet.name, system: '/nick'}
         window.socket.send msg
 
-        # Hide username input filed once user has replaced the default name.
+        # Hide username input field once the user has replaced the default name.
         $('#username').attr("value", msg.name).
             css 'display', 'none'
 
     # Read user input and pass it on to the server via websocket.
     # Also check for slash commands.
     takeTurn: (inVal) ->
-        # If we have a new name, alert the server and retry @takeTurn()
+        # If we have a new name, alert the server and retry `@takeTurn()`
         # with the same input.
         unless $("#username").css('display') is 'none'
             if $("#username").attr('value').search('user') is -1
@@ -119,7 +119,7 @@ window.chatbox =
             if tokens[0] is "/clear"
                 @wipeScreen()
 
-            # Switch username both on page and in packet;
+            # Switch username both on page and in `packet`;
             # alert server of the new name.
             if tokens[0] in ["/name", "/nick"]
                 @sendNameChange tokens[1]
