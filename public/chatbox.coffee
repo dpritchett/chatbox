@@ -41,15 +41,15 @@ window.chatbox =
 
     # This `packet` will be reused for our JSON communications with the server.
     packet:
-        name: 'default_name'
-        content: ''
-        date: ''
+        name:       'default_name'
+        content:    ''
+        date:       ''
 
     # Display an alert in a colored box that fades in and then out.
     alertUser: (alertText) ->
-        $('#alerts').empty().
-            append(alertText).
-            stop(true, true).
+        $('#alerts').empty()  .
+            append(alertText) .
+            stop(true, true)  .
             fadeIn(500,
                 -> $('#alerts').fadeOut(3000))
 
@@ -105,8 +105,8 @@ window.chatbox =
 
         # Clean up whitespace to avoid breaking our JSON submission.
         # Inputs need to be sanitized serverside as well.
-        inVal = inVal.replace ' ','&nbsp;' .
-            replace /\\/gi, '' .
+        inVal = inVal.replace ' ','&nbsp;'  .
+            replace /\\/gi, ''              .
             replace /\"/gi, ''
 
         @packet.name    = $('#username').attr 'value'
