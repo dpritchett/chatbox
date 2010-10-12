@@ -1,5 +1,5 @@
 # Frontend communications and animation for [chatbox](/).
-# Read **[server.coffee](/docs/)** to understand the backend.
+# Read **[server.coffee](server.html)** to understand the backend.
 
 # ### Initialization
 
