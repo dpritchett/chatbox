@@ -1,1 +1,9 @@
-coffee -c server.coffee && coffee -c public/chatbox.coffee && docco server.coffee public/chatbox.coffee
+#!/usr/bin/env ruby
+
+cmds = []
+cmds << "coffee -c server.coffee"
+cmds << "coffee -c public/chatbox.coffee"
+cmds << "docco server.coffee" 
+cmds << "docco public/chatbox.coffee"
+
+system cmds.join("&&")
