@@ -117,13 +117,9 @@ window.chatbox =
         if inVal.charAt(0) is '/'
             tokens = inVal.split '&nbsp;'
 
-            if tokens[0] is "/clear"
-                @wipeScreen()
-
-            # Switch username both on page and in `packet`;
-            # **alert server of the new name**.
-            if tokens[0] in ["/name", "/nick"]
-                @sendNameChange tokens[1]
+            switch tokens[0]
+                when "/clear", "/wipe" then @wipeScreen()
+                when "/name", "/nick" then @sendNameChange tokens[1]
 
             # Give visual feedback on slash commands.
             @alertUser inVal

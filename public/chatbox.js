@@ -70,7 +70,7 @@
       return $('#username').attr("value", msg.name).css('display', 'none');
     },
     takeTurn: function(inVal) {
-      var _ref, tokens;
+      var tokens;
       if ($("#username").css('display') !== 'none') {
         if ($("#username").attr('value').search('user') === -1) {
           this.sendNameChange($('#username').attr('value'));
@@ -83,11 +83,15 @@
       this.packet.date = (new Date()).getTime();
       if (inVal.charAt(0) === '/') {
         tokens = inVal.split('&nbsp;');
-        if (tokens[0] === "/clear") {
-          this.wipeScreen();
-        }
-        if (("/name" === (_ref = tokens[0]) || "/nick" === _ref)) {
-          this.sendNameChange(tokens[1]);
+        switch (tokens[0]) {
+          case "/clear":
+          case "/wipe":
+            this.wipeScreen();
+            break;
+          case "/name":
+          case "/nick":
+            this.sendNameChange(tokens[1]);
+            break;
         }
         this.alertUser(inVal);
       } else if (inVal !== '') {
