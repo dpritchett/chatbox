@@ -1,7 +1,6 @@
 # **Chatbox** is a websockets-based chat room built on
 # [node.js](http://nodejs.org) and [socket.io](http://socket.io). You can see
-# chatbox in action at [dpritchett.no.de](http://dpritchett.no.de) thanks to 
-# free no.de hosting by [Joyent](http://no.de).
+# chatbox in action at [dpritchett.no.de](http://dpritchett.no.de)
 # 
 # Use [npm](http://npmjs.org/) to install the packages by name:
 #
@@ -9,22 +8,22 @@
 #
 #  Development begun September 2010 as a JavaScript exploration.
 #
-####  Contact: 
+# ####  Contact: 
 #
 #  *  [daniel@sharingatwork.com](mailto:daniel@sharingatwork.com)
 #  *  [github.com/dpritchett](http://github.com/dpritchett)
 #  *  [@dpritchett](http://twitter.com/dpritchett)
 
-### Includes and globals
+# ### Includes and globals
+
+sys         = require 'sys'
+uuid        = require 'uuid'
+io          = require 'socket.io'
+Connect     = require 'connect'
 
 PORT        = 80
 DB_SERVER   = 'dpritchett.couchone.com'
 DB_PORT     = 80
-
-Connect     = require 'connect'
-sys         = require 'sys'
-uuid        = require 'uuid'
-io          = require 'socket.io'
 
 # We're currently logging to a couchdb on [couchone.com](http://couchdb.com)
 # even though we're not yet pulling out any data.
@@ -33,12 +32,12 @@ couchdb     = require 'couchdb'
 couchClient = couchdb.createClient DB_PORT, DB_SERVER
 db          = couchClient.db 'chatbox'
 
-### Service initialization
+# ### Service initialization
 
 # Create an instance of the Connect middleware, serving static files
-# out of /public an /docs.
+# out of `/public`.
 
-server = Connect.createServer (
+server = Connect.createServer(
 
     Connect.logger()
 
@@ -48,17 +47,16 @@ server = Connect.createServer (
         res.writeHead 200, 'Content-Type': 'text/plain'
         res.write 'Hello World'
         res.end()
-
     )
 
-# Listen on http://localhost:80 by default but allow command line
-# args to override to e.g. http://dpritchett.no.de.
+# Listen on `http://localhost:80` by default but allow command line
+# args to override to e.g. `http://dpritchett.no.de`.
 
 server.listen PORT
 console.log "Listening on port #{PORT} with backend at #{DB_SERVER}: #{DB_PORT}"
 
 # This userlist allows us to keep track of who's online and which names map to 
-# which client.sessionId.
+# which `client.sessionId`.
 
 names = []
 
@@ -80,12 +78,13 @@ users =
     list: ->
         (val for key, val of names).join ' '
 
+# Typing `JSON.stringify` too often cluttered up the source...
 json = JSON.stringify
 
 # Socket.io hooks into the server above and intercepts socket communications.
 socket = io.listen server
 
-### Client handling logic: on connect, on message, on disconnect
+# ### Client handling logic: on connect, on message, on disconnect
 
 socket.on 'connection', (client) ->
 
@@ -120,3 +119,11 @@ socket.on 'connection', (client) ->
 
         client.broadcast json response
         users.destroy client.sessionId
+
+# ### Miscellaneous
+# Literate documentation generated with
+# [Docco](http://jashkenas.github.com/docco).
+#
+# Source code hosted on [github](http://github.com/dpritchett/chatbox).
+#
+# Free no.de hosting by [Joyent](http://no.de).
