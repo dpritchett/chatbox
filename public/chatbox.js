@@ -77,7 +77,7 @@
           return this.takeTurn(inVal);
         }
       }
-      inVal = inVal.replace(' ', '&nbsp;').replace(/\\/gi, '').replace(/\"/gi, '');
+      inVal = inVal.replace(' ', '&nbsp;'.replace(/\\/gi, ''.replace(/\"/gi, '')));
       this.packet.name = $('#username').attr('value');
       this.packet.content = inVal;
       this.packet.date = (new Date()).getTime();

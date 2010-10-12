@@ -104,9 +104,9 @@ window.chatbox =
 
         # Clean up whitespace to avoid breaking our JSON submission.
         # Inputs need to be sanitized serverside as well.
-        inVal = inVal.replace(' ','&nbsp;').
-            replace(/\\/gi, '').
-            replace(/\"/gi, '')
+        inVal = inVal.replace ' ','&nbsp;' .
+            replace /\\/gi, '' .
+            replace /\"/gi, ''
 
         @packet.name    = $('#username').attr 'value'
         @packet.content = inVal
